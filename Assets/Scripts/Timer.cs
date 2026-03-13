@@ -5,7 +5,7 @@ public class Timer : MonoBehaviour
 {
    [SerializeField] public float remainingTime;
    public bool inWater;
-   private float maxTime = 300f;
+   private float maxTime = 180f;
 
    void Start()
    {
@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour
    }
 
 
-    void Update()
+    void FixedUpdate()
     {
         print("checking");
 
@@ -46,7 +46,7 @@ public class Timer : MonoBehaviour
         if(other.gameObject.CompareTag("Water"))
         {
             inWater = true;
-            print("inWater");
+            print("in Water");
         }
     }
 
@@ -55,7 +55,7 @@ public class Timer : MonoBehaviour
         if(other.gameObject.CompareTag("Water"))
         {
             inWater = false;
-            print("outWater");
+            print("out Water");
         }
     }
 

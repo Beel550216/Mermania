@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
+    public GameObject[] playerModelPrefab;
+    public GameObject currentPlayerModel;
+
     public CharacterController controller;
     public Transform cam;
 
@@ -38,13 +41,18 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
+
+
         //gravity
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
         //walk
+
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
 
         if(direction.magnitude >= 0.1f)
         {

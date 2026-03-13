@@ -1,22 +1,24 @@
 using UnityEngine;
 
-public class RunState : BaseState<PlayerStateMachine.PlayerState>
+public class DeathState : BaseState<PlayerStateMachine.PlayerState>
 {
-    public RunState(PlayerStateMachine.PlayerState key) : base(key)
+    public DeathState(PlayerStateMachine.PlayerState key) : base(key)
     {
     }
 
     public override void EnterState()
     {
-        Debug.Log("ENTERED RUN STATE");
+        //currentPlayerModel = playerModelPrefab[2];  //2 = 3
+
+        Debug.Log("ENTERED DEATH STATE");
     }
     public override void UpdateState()
     {
-        Debug.Log("UPDATE RUN STATE");
+        Debug.Log("UPDATE DEATH STATE");
     }
     public override void ExitState()
     {
-        Debug.Log("EXIT RUN STATE");
+        Debug.Log("EXIT DEATH STATE");
     }
 
     public override PlayerStateMachine.PlayerState GetNextState()
@@ -39,4 +41,3 @@ public class RunState : BaseState<PlayerStateMachine.PlayerState>
 
     }
 }
-

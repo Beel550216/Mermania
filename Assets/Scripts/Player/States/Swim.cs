@@ -1,22 +1,22 @@
 using UnityEngine;
 
-public class RunState : BaseState<PlayerStateMachine.PlayerState>
+public class SwimState : BaseState<PlayerStateMachine.PlayerState>
 {
-    public RunState(PlayerStateMachine.PlayerState key) : base(key)
+    public SwimState(PlayerStateMachine.PlayerState key) : base(key)
     {
     }
 
     public override void EnterState()
     {
-        Debug.Log("ENTERED RUN STATE");
+        Debug.Log("ENTERED SWIM STATE");
     }
     public override void UpdateState()
     {
-        Debug.Log("UPDATE RUN STATE");
+        Debug.Log("UPDATE SWIM STATE");
     }
     public override void ExitState()
     {
-        Debug.Log("EXIT RUN STATE");
+        Debug.Log("EXIT SWIM STATE");
     }
 
     public override PlayerStateMachine.PlayerState GetNextState()
@@ -39,4 +39,3 @@ public class RunState : BaseState<PlayerStateMachine.PlayerState>
 
     }
 }
-

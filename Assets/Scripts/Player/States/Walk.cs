@@ -1,16 +1,41 @@
 using UnityEngine;
 
-public class Walk : MonoBehaviour
+public class WalkState : BaseState<PlayerStateMachine.PlayerState>
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public WalkState(PlayerStateMachine.PlayerState key) : base(key)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void EnterState()
     {
-        
+        Debug.Log("ENTERED WALK STATE");
+    }
+    public override void UpdateState()
+    {
+        Debug.Log("UPDATE WALK STATE");
+    }
+    public override void ExitState()
+    {
+        Debug.Log("EXIT WALK STATE");
+    }
+
+    public override PlayerStateMachine.PlayerState GetNextState()
+    {
+        Debug.Log("Getting next state");
+        Debug.Log(StateKey);
+        return StateKey;
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+
+    }
+    public override void OnTriggerStay(Collider other)
+    {
+
+    }
+    public override void OnTriggerExit(Collider other)
+    {
+
     }
 }
