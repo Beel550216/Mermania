@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 using System.Collections;
 
 public class Timer : MonoBehaviour
@@ -6,12 +7,12 @@ public class Timer : MonoBehaviour
    [SerializeField] public float remainingTime;
    public bool inWater;
    private float maxTime = 180f;
+    public TMP_Text waterMeter;
 
    void Start()
    {
-    remainingTime = maxTime;
+        remainingTime = maxTime;
    }
-
 
     void FixedUpdate()
     {
@@ -39,6 +40,8 @@ public class Timer : MonoBehaviour
 
         int minutes = Mathf.FloorToInt(remainingTime / 60);
         int seconds = Mathf.FloorToInt(remainingTime % 60);
+
+        waterMeter.text = "Water Meter: " + minutes + ":" + seconds;
     }
 
     void OnTriggerEnter(Collider other)
