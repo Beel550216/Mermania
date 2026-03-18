@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
     public int sceneCount;
-
+    public bool inWater;
 
     public List<GameObject> collectibles = new List<GameObject>();
 
@@ -52,6 +52,24 @@ public class LevelManager : MonoBehaviour
     public void Play()
     {
         Time.timeScale = 1;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            inWater = true;
+            print("in Water");
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            inWater = false;
+            print("out Water");
+        }
     }
 
 }

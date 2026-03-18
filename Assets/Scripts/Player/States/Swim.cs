@@ -26,6 +26,13 @@ public class SwimState : BaseState<PlayerStateMachine.PlayerState>
         return StateKey;
     }
 
+    public override PlayerStateMachine.PlayerState GetState()
+    {
+        //Debug.Log("Getting " + StateKey + " state");
+        //Debug.Log("STATE: " + StateKey);
+        return StateKey;
+    }
+
     public override void OnTriggerEnter(Collider other)
     {
 

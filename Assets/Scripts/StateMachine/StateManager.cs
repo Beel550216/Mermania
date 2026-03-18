@@ -31,6 +31,7 @@ public abstract class StateManager<EState> : MonoBehaviour where EState : Enum
             TransitionToState(nextStateKey);
         }
 
+
     }
 
     public void TransitionToState(EState stateKey)  //changes to the state (key) by searching for it in the dictionary

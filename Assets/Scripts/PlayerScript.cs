@@ -26,6 +26,13 @@ public class ThirdPersonMovement : MonoBehaviour
     float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
 
+    public LevelManager lm;
+
+    private void Awake()
+    {
+        lm = GetComponent<LevelManager>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -62,6 +69,19 @@ public class ThirdPersonMovement : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
+
+            /*if (lm.inWater == false)
+            {
+            }
+            if (lm.inWater == true)
+            {
+                gravity = -12f;
+
+                //swim stuff
+            }*/
+
+
+
         }
     }
 }

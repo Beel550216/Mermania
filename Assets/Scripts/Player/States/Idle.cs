@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor.Build;
 using UnityEngine;
+using static PlayerStateMachine;
+//using static Unity.Cinemachine.InputAxisControllerBase<T>;
 
 public class IdleState : BaseState<PlayerStateMachine.PlayerState>
 {
@@ -22,6 +24,18 @@ public class IdleState : BaseState<PlayerStateMachine.PlayerState>
         {
             ExitState();
         }*/
+
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            Debug.Log("Walking");
+            GetState();
+            //ExitState();
+
+        }
     }
     public override void ExitState()
     {
@@ -34,6 +48,16 @@ public class IdleState : BaseState<PlayerStateMachine.PlayerState>
         Debug.Log(StateKey);
         return StateKey;
     }
+
+    public override PlayerStateMachine.PlayerState GetState()
+    {
+        //PlayerState.IdleState;
+        //EState nextStateKey = CurrentState.GetNextState();
+        Debug.Log("Getting " + StateKey + " state");
+        Debug.Log("STATE: " + StateKey);
+        return StateKey;
+    }
+
 
     public override void OnTriggerEnter(Collider other)
     {

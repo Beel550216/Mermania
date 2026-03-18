@@ -4,7 +4,7 @@ Shader "Basics/Waves2"
     {
         _BaseColor("Base Color", Color) = (1, 1, 1, 1)
         _BaseTexture("Base Texture", 2D) = "white" {}
-        _WaveHeight("Wave Height", Range(0.0, 1.0)) = 0.25
+        _WaveHeight("Wave Height", Range(0.0, 5.0)) = 0.25 //edited
         _WaveSpeed("Wave Speed", Range(0.0, 10.0)) = 1.0
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Source Blend Mode", Integer) = 5
         [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Destination Blend Mode", Integer) = 10
