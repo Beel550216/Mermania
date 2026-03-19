@@ -21,16 +21,15 @@ public class WalkState : BaseState<PlayerStateMachine.PlayerState>
 
     public override PlayerStateMachine.PlayerState GetNextState()
     {
+        //IsTransitioningState = true;
         Debug.Log("Getting next state");
         Debug.Log(StateKey);
-        return StateKey;
+        return StateKey; 
     }
 
-    public override PlayerStateMachine.PlayerState GetState()
+    public override void CheckForRun()
     {
-        //Debug.Log("Getting " + StateKey + " state");
-        //Debug.Log("STATE: " + StateKey);
-        return StateKey;
+
     }
 
     public override void OnTriggerEnter(Collider other)

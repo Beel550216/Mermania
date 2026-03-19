@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public abstract class StateManager<EState> : MonoBehaviour where EState : Enum
 {
-    protected Dictionary<EState, BaseState<EState>> States = new Dictionary<EState, BaseState<EState>>();
+    protected Dictionary<EState, BaseState<EState>> States = new Dictionary<EState, BaseState<EState>>();  //e.g. idlestate (enum), BaseState<IdleState> (gets the seperate state script)
 
     //Dictionaries store values behind keys --> each state is being stored //similar to a list
     // BaseState = type //protected as only those that inherit will need to access this
 
-    protected BaseState<EState> CurrentState;
+    public BaseState<EState> CurrentState;
 
     protected bool IsTransitioningState = false;
-    
+
     void Start()
     {
         CurrentState.EnterState();
@@ -20,7 +20,11 @@ public abstract class StateManager<EState> : MonoBehaviour where EState : Enum
 
     void Update()
     {
-        EState nextStateKey = CurrentState.GetNextState();
+        EState nextStateKey = CurrentState.GetNextState(); //change to GetState()
+
+        CurrentState.CheckForRun();
+
+
 
         if (!IsTransitioningState && nextStateKey.Equals(CurrentState.StateKey))
         {
@@ -41,6 +45,21 @@ public abstract class StateManager<EState> : MonoBehaviour where EState : Enum
         CurrentState = States[stateKey];
         CurrentState.EnterState();
         IsTransitioningState = false;
+    }
+
+    public void CheckForRun()
+    {
+        //TransitionToState(PlayerState.WalkState);
+        Debug.Log("CHECKING RUN");//nextStateKey = WalkState;
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            if (direction.magnitude >= 0.1f) // key held down
+            {
+               // CurrentState = States[WalkState];
+                return;
+            }
+
     }
 
     private void OnTriggerEnter(Collider other)

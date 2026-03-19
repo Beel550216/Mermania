@@ -39,11 +39,9 @@ public class RunState : BaseState<PlayerStateMachine.PlayerState>
         return StateKey;
     }
 
-    public override PlayerStateMachine.PlayerState GetState()
+    public override void CheckForRun()
     {
-        //Debug.Log("Getting " + StateKey + " state");
-        //Debug.Log("STATE: " + StateKey);
-        return StateKey;
+
     }
 
     public override void OnTriggerEnter(Collider other)

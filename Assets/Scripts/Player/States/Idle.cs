@@ -25,17 +25,7 @@ public class IdleState : BaseState<PlayerStateMachine.PlayerState>
             ExitState();
         }*/
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (direction.magnitude >= 0.1f)
-        {
-            Debug.Log("Walking");
-            GetState();
-            //ExitState();
-
-        }
+        CheckForRun();
     }
     public override void ExitState()
     {
@@ -44,20 +34,43 @@ public class IdleState : BaseState<PlayerStateMachine.PlayerState>
 
     public override PlayerStateMachine.PlayerState GetNextState()
     {
-        Debug.Log("Getting next state");
-        Debug.Log(StateKey);
-        return StateKey;
+        //IsTransitioningState = true;
+        //Debug.Log("Getting next state");
+        Debug.Log("STATE KEY:" + StateKey);
+        return StateKey; 
     }
 
-    public override PlayerStateMachine.PlayerState GetState()
+    /*public override PlayerStateMachine.PlayerState GetWalkState()
     {
-        //PlayerState.IdleState;
-        //EState nextStateKey = CurrentState.GetNextState();
         Debug.Log("Getting " + StateKey + " state");
         Debug.Log("STATE: " + StateKey);
+        //sm.TransitionToState(PlayerState.WalkState); //= States[PlayerState.IdleState];
+        //nextStateKey = WalkState; //= stateName;
+        //PlayerState.IdleState;
+        //EState nextStateKey = CurrentState.GetNextState();
         return StateKey;
-    }
+    }*/
 
+    public override void CheckForRun()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            Debug.Log("Walking");
+            StateKey = PlayerState.WalkState;
+            GetNextState();
+            ExitState();
+            //GetState("WalkState");
+            //ExitState();
+
+        }
+        Debug.Log("CheckingWalk");
+        //TransitionToState(PlayerState.WalkState);
+    }
+  
 
     public override void OnTriggerEnter(Collider other)
     {

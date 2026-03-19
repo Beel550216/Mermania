@@ -26,6 +26,11 @@ public class PlayerStateMachine : StateManager<PlayerStateMachine.PlayerState>
         States.Add(PlayerState.WalkState, new WalkState(PlayerState.WalkState));
         States.Add(PlayerState.SwimState, new SwimState(PlayerState.SwimState));
         States.Add(PlayerState.DeathState, new DeathState(PlayerState.DeathState));
-        CurrentState = States[PlayerState.IdleState]; //change this to Reset
+       // CurrentState = States[PlayerState.IdleState]; //change this to Reset
+    }
+
+    public void IntoWalkState() 
+    {
+        CurrentState = States[PlayerState.WalkState];
     }
 }
