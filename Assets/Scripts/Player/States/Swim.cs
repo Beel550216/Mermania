@@ -1,46 +1,65 @@
+using Player;
 using UnityEngine;
 
-public class SwimState : BaseState<PlayerStateMachine.PlayerState>
+namespace Player
 {
-    public SwimState(PlayerStateMachine.PlayerState key) : base(key)
+    public class SwimState : State
     {
+        private float speed = 12;
+        float turnSmoothVelocity;
+        public float turnSmoothTime = 0.1f;
+
+        public SwimState(PlayerScript player, StateMachine sm) : base(player, sm)
+        {
+        }
+
+
+        public override void Enter()
+        {
+            //currentPlayerModel = playerModelPrefab[2];  //2 = 3
+
+             Debug.Log("ENTERED SWIM STATE");
+        }
+        public override void LogicUpdate()
+        {
+            //check float
+            if (player.CheckForFloat() == false)
+            {
+                if (player.CheckForMovement() == false)
+                {
+                    player.gravity = -9.81f;
+                    player.sm.ChangeState(player.idleState);
+
+                }
+                else
+                {
+                    sm.ChangeState(player.walkState);
+                }
+            }
+
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + player.cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(player.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            player.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            player.controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            //Debug.Log("UPDATE DEATH STATE");
+        }
+
+        public override void PhysicsUpdate()
+        {
+            player.gravity = 9f;  //edit this too
+            player.rb.AddForce(player.transform.up * 100f); //edit this
+        }
+
+        public override void Exit()
+        {
+            //Debug.Log("EXIT DEATH STATE");
+        }
     }
 
-    public override void EnterState()
-    {
-        Debug.Log("ENTERED SWIM STATE");
-    }
-    public override void UpdateState()
-    {
-        Debug.Log("UPDATE SWIM STATE");
-    }
-    public override void ExitState()
-    {
-        Debug.Log("EXIT SWIM STATE");
-    }
-
-    public override PlayerStateMachine.PlayerState GetNextState()
-    {
-        Debug.Log("Getting next state");
-        Debug.Log(StateKey);
-        return StateKey;
-    }
-
-    public override void CheckForRun()
-    {
-
-    }
-
-    public override void OnTriggerEnter(Collider other)
-    {
-
-    }
-    public override void OnTriggerStay(Collider other)
-    {
-
-    }
-    public override void OnTriggerExit(Collider other)
-    {
-
-    }
 }

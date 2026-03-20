@@ -1,48 +1,29 @@
+using Player;
 using UnityEngine;
 
-public class DeathState : BaseState<PlayerStateMachine.PlayerState>
-{
-    public DeathState(PlayerStateMachine.PlayerState key) : base(key)
+namespace Player
+{ 
+    public class DeathState: State
     {
+        public DeathState(PlayerScript player, StateMachine sm) : base(player, sm)
+        {
+        }
+
+       
+        public override void Enter()
+        {
+            //currentPlayerModel = playerModelPrefab[2];  //2 = 3
+
+            Debug.Log("ENTERED DEATH STATE");
+        }
+        public override void LogicUpdate()
+        {
+            Debug.Log("UPDATE DEATH STATE");
+        }
+        public override void Exit()
+        {
+            Debug.Log("EXIT DEATH STATE");
+        }
     }
 
-    public override void EnterState()
-    {
-        //currentPlayerModel = playerModelPrefab[2];  //2 = 3
-
-        Debug.Log("ENTERED DEATH STATE");
-    }
-    public override void UpdateState()
-    {
-        Debug.Log("UPDATE DEATH STATE");
-    }
-    public override void ExitState()
-    {
-        Debug.Log("EXIT DEATH STATE");
-    }
-
-    public override PlayerStateMachine.PlayerState GetNextState()
-    {
-        Debug.Log("Getting next state");
-        Debug.Log(StateKey);
-        return StateKey;
-    }
-
-    public override void CheckForRun()
-    {
-
-    }
-
-    public override void OnTriggerEnter(Collider other)
-    {
-
-    }
-    public override void OnTriggerStay(Collider other)
-    {
-
-    }
-    public override void OnTriggerExit(Collider other)
-    {
-
-    }
 }

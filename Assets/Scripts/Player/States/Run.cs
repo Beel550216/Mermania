@@ -1,60 +1,78 @@
+using Player;
 using UnityEngine;
 //using static Unity.Cinemachine.InputAxisControllerBase<T>;
 
-public class RunState : BaseState<PlayerStateMachine.PlayerState>
+public class RunState : State
 {
-    public RunState(PlayerStateMachine.PlayerState key) : base(key)
+    private float speed = 22;
+    float turnSmoothVelocity;
+    public float turnSmoothTime = 0.1f;
+    //variables just for this state here
+
+    public RunState(PlayerScript player, StateMachine sm) : base(player, sm)
     {
     }
 
-    public override void EnterState()
+
+    public override void Enter()
     {
+
         Debug.Log("ENTERED RUN STATE");
+
     }
-    public override void UpdateState()
+    public override void LogicUpdate()
     {
-        Debug.Log("UPDATE RUN STATE");
+        //check death
+        if (player.CheckForDeath() == true)
+        {
+            sm.ChangeState(player.deathState);
+        }
 
-        /*float horizontal = Input.GetAxisRaw("Horizontal");
-         float vertical = Input.GetAxisRaw("Vertical");
-         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        //check float
+        if (player.CheckForFloat() == true)
+        {
+            sm.ChangeState(player.swimState);
+        }
 
-         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-         transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        if (player.CheckForMovement() == false)
+        {
+            player.sm.ChangeState(player.idleState);
 
-         Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-         controller.Move(moveDir.normalized * speed * Time.deltaTime); */
+        }
+        if (player.CheckForMovement() == true)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift) == false)
+            {
+                sm.ChangeState(player.walkState);
+            }
+            else
+            {
+
+                //player.vfx.SetFloat("spawnRate", 0f);
+
+
+                float horizontal = Input.GetAxisRaw("Horizontal");
+                float vertical = Input.GetAxisRaw("Vertical");
+                Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + player.cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(player.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                player.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                player.controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            }
+
+        }
     }
-    public override void ExitState()
+    public override void Exit()
     {
         Debug.Log("EXIT RUN STATE");
         //GetNextState();
     }
 
-    public override PlayerStateMachine.PlayerState GetNextState()
-    {
-        Debug.Log("Getting next state");
-        Debug.Log(StateKey);
-        return StateKey;
-    }
+    
 
-    public override void CheckForRun()
-    {
-
-    }
-
-    public override void OnTriggerEnter(Collider other)
-    {
-
-    }
-    public override void OnTriggerStay(Collider other)
-    {
-
-    }
-    public override void OnTriggerExit(Collider other)
-    {
-
-    }
+   
 }
 

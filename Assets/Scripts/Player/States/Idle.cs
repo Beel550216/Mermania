@@ -1,87 +1,80 @@
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Build;
 using UnityEngine;
-using static PlayerStateMachine;
-//using static Unity.Cinemachine.InputAxisControllerBase<T>;
 
-public class IdleState : BaseState<PlayerStateMachine.PlayerState>
+namespace Player
 {
-    public IdleState(PlayerStateMachine.PlayerState key) : base(key)
-    {
-    }
 
-    public override void EnterState()
-    {
-        Debug.Log("ENTERED IDLE STATE");
-    }
-    public override void UpdateState()
-    {
-        Debug.Log("UPDATE IDLE STATE");
 
-        /*if (direction.magnitude >= 0.1f)
+    public class IdleState : State
+    {
+
+        //variables and methods specific to this state only
+
+        public IdleState(PlayerScript player, StateMachine sm) : base(player, sm)
         {
-            ExitState();
-        }*/
+        }
 
-        CheckForRun();
-    }
-    public override void ExitState()
-    {
-        Debug.Log("EXIT IDLE STATE");
-    }
 
-    public override PlayerStateMachine.PlayerState GetNextState()
-    {
-        //IsTransitioningState = true;
-        //Debug.Log("Getting next state");
-        Debug.Log("STATE KEY:" + StateKey);
-        return StateKey; 
-    }
-
-    /*public override PlayerStateMachine.PlayerState GetWalkState()
-    {
-        Debug.Log("Getting " + StateKey + " state");
-        Debug.Log("STATE: " + StateKey);
-        //sm.TransitionToState(PlayerState.WalkState); //= States[PlayerState.IdleState];
-        //nextStateKey = WalkState; //= stateName;
-        //PlayerState.IdleState;
-        //EState nextStateKey = CurrentState.GetNextState();
-        return StateKey;
-    }*/
-
-    public override void CheckForRun()
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (direction.magnitude >= 0.1f)
+        public override void Enter()
         {
-            Debug.Log("Walking");
-            StateKey = PlayerState.WalkState;
-            GetNextState();
-            ExitState();
-            //GetState("WalkState");
-            //ExitState();
+            Debug.Log("ENTERED IDLE STATE");
+        }
+        public override void LogicUpdate()
+        {
+
+            //check death
+            if (player.CheckForDeath() == true)
+            {
+                sm.ChangeState(player.deathState);
+            }
+
+            //check float
+            if (player.CheckForFloat() == true)
+            {
+                sm.ChangeState(player.swimState);
+            }
+
+            if ( player.CheckForMovement() == true )
+            {
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    sm.ChangeState(player.runState);
+                }
+                else
+                {
+                    sm.ChangeState(player.walkState);
+                }
+
+                
+            }
+        }
+        public override void Exit()
+        {
+            //Debug.Log("EXIT IDLE STATE");
+        }
+
+
+        /*
+
+      
+
+        */
+
+
+        /*
+        public override void OnTriggerEnter(Collider other)
+        {
 
         }
-        Debug.Log("CheckingWalk");
-        //TransitionToState(PlayerState.WalkState);
-    }
-  
+        public override void OnTriggerStay(Collider other)
+        {
 
-    public override void OnTriggerEnter(Collider other)
-    {
-       
-    }
-    public override void OnTriggerStay(Collider other)
-    {
+        }
+        public override void OnTriggerExit(Collider other)
+        {
+
+        }
+        */
 
     }
-    public override void OnTriggerExit(Collider other)
-    {
-       
-    }
+
 }

@@ -9,7 +9,8 @@ public class LevelManager : MonoBehaviour
     public int sceneCount;
     public bool inWater;
 
-    public List<GameObject> collectibles = new List<GameObject>();
+    //public List<GameObject> collectibles = new List<GameObject>();
+    public List<string> collectibles = new List<string>();
 
     void Start()
     {
@@ -54,22 +55,5 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Water"))
-        {
-            inWater = true;
-            print("in Water");
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Water"))
-        {
-            inWater = false;
-            print("out Water");
-        }
-    }
 
 }
