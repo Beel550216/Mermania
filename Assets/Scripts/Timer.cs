@@ -41,7 +41,7 @@ public class Timer : MonoBehaviour
         int minutes = Mathf.FloorToInt(remainingTime / 60);
         int seconds = Mathf.FloorToInt(remainingTime % 60);
 
-        waterMeter.text = "Water Meter: " + minutes + ":" + seconds;  //h20 (instead of 02)
+        waterMeter.text = "Water Meter: " + minutes + ":" + seconds;  //h20 (instead of 02)Tik
     }
 
     void OnTriggerEnter(Collider other)
