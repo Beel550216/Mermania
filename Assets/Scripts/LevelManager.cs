@@ -2,12 +2,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
     public int sceneCount;
     public bool inWater;
+
+    [SerializeField] private Transform mainCam;
+    [SerializeField] public int depth = -21;
+
+    [SerializeField] private Volume postProcessing;
+
+    [SerializeField] private VolumeProfile surfacePostProcessing;
+    [SerializeField] private VolumeProfile underwaterPostProcessing;
 
     //public List<GameObject> collectibles = new List<GameObject>();
     public List<string> collectibles = new List<string>();
@@ -20,7 +29,16 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(mainCam.position.y < 34)
+        {
+            EnableEffects(true);
+        }
+        else
+        {
+            EnableEffects(false);
+        }
+        Debug.Log("Current depth " + depth);
+        Debug.Log("Effects " + enabled);
     }
 
 
@@ -55,5 +73,18 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    private void EnableEffects(bool enable)
+    {
+        if (enable)
+        {
+            RenderSettings.fog = true;
+            postProcessing.profile = underwaterPostProcessing;
+        }
+        else
+        {
+            RenderSettings.fog = false;
+            postProcessing.profile = surfacePostProcessing;
+        }
 
+    }
 }
