@@ -26,8 +26,8 @@ namespace Player
         public float speed = 6;
         public float gravity = -9.81f;
         public float jumpHeight = 3;
-        Vector3 velocity;
-        bool isGrounded;
+        public Vector3 velocity;
+        public bool isGrounded;
         public Rigidbody rb;
 
         public Transform groundCheck;
@@ -41,9 +41,12 @@ namespace Player
 
         public StateMachine sm;
 
+        public AudioManager audioManager;
+
         public IdleState idleState;
         public WalkState walkState;
         public RunState runState;
+        public JumpState jumpState;
         public SwimState swimState;
         public DeathState deathState;
 
@@ -51,6 +54,7 @@ namespace Player
         {
             sm = gameObject.AddComponent<StateMachine>();
             rb  = GetComponent<Rigidbody>();
+            audioManager = GetComponent<AudioManager>();
 
             //add variables here to be shared across all states
 
@@ -60,6 +64,7 @@ namespace Player
             // add new states here
             idleState = new IdleState(this, sm);
             runState = new RunState(this, sm);
+            jumpState = new JumpState(this, sm);
             walkState = new WalkState(this, sm);
             swimState = new SwimState(this, sm);
             deathState = new DeathState(this, sm);
@@ -127,6 +132,16 @@ namespace Player
             return false;
         }
 
+        public bool CheckForJump()
+        {
+            if (Input.GetKey(KeyCode.Space) == true) //&& isGrounded
+            {
+                return true;
+
+            }
+            return false;
+        }
+
         public bool CheckForDeath()
         {
             if (timer.remainingTime <= 0.1f)
@@ -165,6 +180,11 @@ namespace Player
                 return true;
             }
             return false;
+        }
+
+        public void PlaySFX(int sfx)
+        {
+            //AudioManager.instance.PlaySFX(sfx);
         }
 
     }

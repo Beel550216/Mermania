@@ -28,7 +28,7 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //LoadVloume();
+        //LoadVolume();
     }
 
     void LoadVolume()
@@ -45,10 +45,16 @@ public class AudioManager : MonoBehaviour
         backgroundSource.Play();
     }
 
-    public void playSFX(int num)
+    public void PlaySFX(int num)
     {
         AudioClip clip = sfxClips[num];
         sfxSource.PlayOneShot(clip);
+    }
+
+    public void StopSFX(int num)
+    {
+        AudioClip clip = sfxClips[num];
+        sfxSource.Stop();
     }
 
 }

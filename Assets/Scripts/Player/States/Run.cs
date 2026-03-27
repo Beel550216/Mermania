@@ -34,14 +34,9 @@ public class RunState : State
             sm.ChangeState(player.swimState);
         }
 
-        if (player.CheckForMovement() == false)
-        {
-            player.sm.ChangeState(player.idleState);
-
-        }
         if (player.CheckForMovement() == true)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) == false)
+            if (Input.GetKey(KeyCode.LeftShift) == false)
             {
                 sm.ChangeState(player.walkState);
             }
@@ -60,7 +55,7 @@ public class RunState : State
                 player.transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                player.controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                player.controller.Move(moveDir.normalized * 20f * Time.deltaTime);
             }
 
         }

@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Player
 {
@@ -7,6 +8,10 @@ namespace Player
     {
         protected PlayerScript player;
         protected StateMachine sm;
+
+        protected AudioManager audioManager;
+
+        //AudioManager theInstance = FindObjectOfType<AudioManager>();
 
 
         // base constructor
@@ -38,6 +43,17 @@ namespace Player
         {
         }
 
-    }
+        public virtual void PlaySFX(int sfx)
+        {
+            //AudioManager audioManager = FindObjectOfType<AudioManager>();
 
+            audioManager.PlaySFX(sfx);
+        }
+
+        public virtual void StopSFX(int sfx)
+        {
+            audioManager.StopSFX(sfx);
+        }
+
+    }
 }

@@ -16,6 +16,7 @@ namespace Player
 
         public override void Enter()
         {
+            player.PlaySFX(0);
             //currentPlayerModel = playerModelPrefab[2];  //2 = 3
 
             Debug.Log("ENTERED WALK STATE");
@@ -39,11 +40,16 @@ namespace Player
                 player.sm.ChangeState(player.idleState);
 
             }
+
             if(player.CheckForMovement() == true)
             {
                 if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
                     sm.ChangeState(player.runState);
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    sm.ChangeState(player.jumpState);
                 }
                 else
                 {
@@ -65,6 +71,18 @@ namespace Player
         {
             //Debug.Log("EXIT DEATH STATE");
         }
+
+        public override void PlaySFX(int sfx)
+        {
+            //AudioManager.PlaySFX(sfx);
+            base.PlaySFX(sfx);
+        }
+
+        public override void StopSFX(int sfx)
+        {
+            base.StopSFX(sfx);
+        }
+
     }
 
 }

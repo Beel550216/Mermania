@@ -10,15 +10,21 @@ public class VolumeSettings : MonoBehaviour
     [SerializeField] AudioMixer mixer;
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider sfxSlider;
-    
-    
+
+    [SerializeField] Slider ambianceSlider;
+
+
     public const string Mixer_Music = "MusicVolume";
     public const string Mixer_SFX = "SFXVolume";
+
+    public const string Mixer_Ambiance = "AmbianceVolume";
 
     void Awake()
     {
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+
+        ambianceSlider.onValueChanged.AddListener(SetAmbianceVolume);
     }
 
     void Start()
@@ -46,5 +52,11 @@ public class VolumeSettings : MonoBehaviour
 
     }
 
-    
+    void SetAmbianceVolume(float value)
+    {
+        mixer.SetFloat(Mixer_Ambiance, Mathf.Log10(value) * 20);
+
+    }
+
+
 }
