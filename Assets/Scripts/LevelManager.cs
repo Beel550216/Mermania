@@ -50,6 +50,14 @@ public class LevelManager : MonoBehaviour
 
     public void SceneCheck()
     {
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            //Do stuff here
+
+            //counter = 0;
+            //camCount = 4;               // counter for the camera movement
+            //CutsceneList(0);
+        }
 
         if (SceneManager.GetActiveScene().name == "Game")
         {
@@ -87,5 +95,10 @@ public class LevelManager : MonoBehaviour
             postProcessing.profile = surfacePostProcessing;
         }
 
+    }
+
+    void CameraMovement()
+    {
+        //new Vector3(212.3, 33, -185.1);
     }
 }

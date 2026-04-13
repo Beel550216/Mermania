@@ -46,11 +46,13 @@ namespace Player
 
 
         }
+
         else
-            {
-                sm.ChangeState(player.idleState);
-            }
+        {
+            sm.ChangeState(player.idleState);
         }
+
+    }
     public override void Exit()
     {
         //Debug.Log("EXIT IDLE STATE");

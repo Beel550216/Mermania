@@ -16,6 +16,7 @@ public class RunState : State
 
     public override void Enter()
     {
+        player.anim.SetBool("Sprint", true);
 
         Debug.Log("ENTERED RUN STATE");
 
@@ -62,6 +63,8 @@ public class RunState : State
     }
     public override void Exit()
     {
+        player.anim.SetBool("Sprint", false);
+
         Debug.Log("EXIT RUN STATE");
         //GetNextState();
     }

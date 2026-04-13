@@ -13,9 +13,10 @@ namespace Player
         {
         }
 
-
         public override void Enter()
         {
+
+            player.anim.Play("SWIM");
             //currentPlayerModel = playerModelPrefab[2];  //2 = 3
 
              Debug.Log("ENTERED SWIM STATE");
@@ -28,12 +29,22 @@ namespace Player
                 if (player.CheckForMovement() == false)
                 {
                     player.gravity = -9.81f;
+                    player.anim.Play("idle");
                     player.sm.ChangeState(player.idleState);
 
                 }
                 else
                 {
+                    player.anim.Play("walk");
                     sm.ChangeState(player.walkState);
+                }
+            }
+            if (player.CheckForFloat() == true)
+            {
+                if (player.CheckForMovement() == false)
+                {
+                    player.sm.ChangeState(player.floatState);
+
                 }
             }
 
@@ -53,7 +64,7 @@ namespace Player
         public override void PhysicsUpdate()
         {
             player.gravity = 9f;  //edit this too
-            player.rb.AddForce(player.transform.up * 100f); //edit this
+            player.rb.AddForce(player.transform.up * 50f); //edit this
         }
 
         public override void Exit()

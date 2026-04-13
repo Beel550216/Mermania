@@ -43,10 +43,13 @@ namespace Player
 
         public AudioManager audioManager;
 
+        public Animator anim;
+
         public IdleState idleState;
         public WalkState walkState;
         public RunState runState;
         public JumpState jumpState;
+        public FloatState floatState;
         public SwimState swimState;
         public DeathState deathState;
 
@@ -54,6 +57,7 @@ namespace Player
         {
             sm = gameObject.AddComponent<StateMachine>();
             rb  = GetComponent<Rigidbody>();
+            anim  = GetComponent<Animator>();
             audioManager = GetComponent<AudioManager>();
 
             //add variables here to be shared across all states
@@ -66,6 +70,7 @@ namespace Player
             runState = new RunState(this, sm);
             jumpState = new JumpState(this, sm);
             walkState = new WalkState(this, sm);
+            floatState = new FloatState(this, sm);
             swimState = new SwimState(this, sm);
             deathState = new DeathState(this, sm);
 
@@ -182,10 +187,28 @@ namespace Player
             return false;
         }
 
+        public bool CheckForSwim()
+        {
+            if (inWater == true)
+            {
+                float horizontal = Input.GetAxisRaw("Horizontal");
+                float vertical = Input.GetAxisRaw("Vertical");
+                Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+                if (direction.magnitude >= 0.1f)
+                {
+                    return true;
+
+                }
+            }
+            return false;
+        }
+
         public void PlaySFX(int sfx)
         {
             //AudioManager.instance.PlaySFX(sfx);
         }
+
 
     }
 

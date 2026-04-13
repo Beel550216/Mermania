@@ -18,6 +18,7 @@ namespace Player
         {
             player.PlaySFX(0);
             //currentPlayerModel = playerModelPrefab[2];  //2 = 3
+            player.anim.SetBool("Walk", true);
 
             Debug.Log("ENTERED WALK STATE");
         }
@@ -31,6 +32,11 @@ namespace Player
 
             //check float
             if (player.CheckForFloat() == true)
+            {
+                sm.ChangeState(player.floatState);
+            }
+
+            if (player.CheckForSwim() == true)
             {
                 sm.ChangeState(player.swimState);
             }
@@ -67,8 +73,16 @@ namespace Player
 
             }
         }
+
+        public override void PhysicsUpdate()
+        {
+            player.gravity = -9.81f;  //edit this too
+            //player.rb.AddForce(player.transform.up * 100f); //edit this
+        }
+
         public override void Exit()
         {
+            player.anim.SetBool("Walk", false);
             //Debug.Log("EXIT DEATH STATE");
         }
 

@@ -16,6 +16,7 @@ namespace Player
 
         public override void Enter()
         {
+            //player.anim.Play("idle");
             Debug.Log("ENTERED IDLE STATE");
         }
         public override void LogicUpdate()
@@ -52,6 +53,14 @@ namespace Player
                 
             }
         }
+
+        public override void PhysicsUpdate()
+        {
+            player.gravity = -9.81f;  //edit this too
+            //player.rb.AddForce(player.transform.up * 100f); //edit this
+        }
+
+
         public override void Exit()
         {
             //Debug.Log("EXIT IDLE STATE");
