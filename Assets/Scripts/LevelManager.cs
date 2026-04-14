@@ -10,6 +10,9 @@ public class LevelManager : MonoBehaviour
     public int sceneCount;
     public bool inWater;
 
+    public GameObject inventory;
+    public GameObject map;
+
     [SerializeField] private Transform mainCam;
     [SerializeField] public int depth = -21;
 
@@ -40,6 +43,8 @@ public class LevelManager : MonoBehaviour
         }
         Debug.Log("Current depth " + depth);
         Debug.Log("Effects " + enabled);
+
+        CheckForKeys();
     }
 
 
@@ -100,5 +105,44 @@ public class LevelManager : MonoBehaviour
     void CameraMovement()
     {
         //new Vector3(212.3, 33, -185.1);
+    }
+
+    public void CheckForKeys()
+    {
+        Debug.Log("KEY RUNNING");
+
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            //inventory = GameObject.FindWithTag("Inventory");
+
+            if(Time.timeScale == 1)
+            {
+                Debug.Log("PRESSED X KEY");
+                inventory.SetActive(true);
+                Pause();
+            }
+            else
+            {
+                inventory.SetActive(false);
+                Play();
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            //inventory = GameObject.FindWithTag("Inventory");
+
+            if(Time.timeScale == 1)
+            {
+                Debug.Log("PRESSED X KEY");
+                map.SetActive(true);
+                Pause();
+            }
+            else
+            {
+                map.SetActive(false);
+                Play();
+            }
+        }
     }
 }

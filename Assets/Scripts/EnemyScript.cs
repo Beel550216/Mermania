@@ -4,7 +4,7 @@ namespace Enemy
 {
     public class EnemyScript : MonoBehaviour
     {
-        public float speed = 6;
+        public float speed = 15;
         public float gravity = -9.81f;
         public float jumpHeight = 3;
         public Vector3 velocity;
@@ -79,6 +79,8 @@ namespace Enemy
 
             //Follow();
 
+            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
             sm.CurrentState.LogicUpdate();
         }
 
@@ -89,7 +91,7 @@ namespace Enemy
 
         public void Follow()
         {
-            if (transform.position.x > target.position.x)
+            /*if (transform.position.x > target.position.x)
             {
                 //target is left
                 transform.localScale = new Vector2(-1, 1);
@@ -102,7 +104,7 @@ namespace Enemy
                 transform.localScale = new Vector2(1, 1);
                 rb.linearVelocity = new Vector2(speed, 0f);
                 transform.position = Vector2.MoveTowards(transform.position, new Vector2(target.position.x, transform.position.y), speed * Time.deltaTime);
-            }
+            }*/
 
         }
 

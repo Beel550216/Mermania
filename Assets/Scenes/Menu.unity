@@ -1774,6 +1774,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   sceneCount: 0
   inWater: 0
+  inventory: {fileID: 0}
+  map: {fileID: 0}
   mainCam: {fileID: 0}
   depth: -21
   postProcessing: {fileID: 0}
@@ -3122,7 +3124,7 @@ GameObject:
   - component: {fileID: 1215312628}
   m_Layer: 0
   m_Name: Main Camera (1)
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
