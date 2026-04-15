@@ -8,6 +8,7 @@ TagManager:
   - Coconut
   - Comb
   - Inventory
+  - Stone
   layers:
   - Default
   - TransparentFX

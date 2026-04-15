@@ -5,6 +5,12 @@ public class Collectible : MonoBehaviour
     public LevelManager lm;
 
     public AudioManager audioManager;
+
+    private void Awake()
+    {
+        lm = GetComponent<LevelManager>();
+    }
+
     void Start()
     {
         lm = GetComponent<LevelManager>();
@@ -20,9 +26,11 @@ public class Collectible : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-           // audioManager.GetComponent<AudioManager>().PlaySFX(1);
+            //audioManager.GetComponent<AudioManager>().PlaySFX(1);
             string type = gameObject.tag.ToString();
+            Debug.Log(type + " Collected");
             lm.collectibles.Add(type);
+
             Destroy(gameObject);
 
         }

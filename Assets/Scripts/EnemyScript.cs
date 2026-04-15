@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace Enemy
@@ -34,7 +35,9 @@ namespace Enemy
         GameObject player;
         public Transform target;
         public float range = 15f;
-        
+
+        public bool killPlayer;
+
         void Start()
         {
             sm = gameObject.AddComponent<StateMachine>();
@@ -53,7 +56,7 @@ namespace Enemy
 
         private void Awake()
         {
-            lm = GetComponent<LevelManager>();
+            //lm = GetComponent<LevelManager>();
         }
 
         void FixedUpdate()
@@ -79,6 +82,9 @@ namespace Enemy
 
             //Follow();
 
+            var rotationAngle = Quaternion.LookRotation(target.position - transform.position); // we get the angle has to be rotated
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotationAngle, Time.deltaTime * 1); // we rotate the rotationAngle 
+
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
             sm.CurrentState.LogicUpdate();
@@ -86,6 +92,7 @@ namespace Enemy
 
         private bool IsPlayerInRange(float range)
         {
+
             return Vector3.Distance(transform.position, player.transform.position) <= range;  //
         }
 
@@ -150,6 +157,16 @@ namespace Enemy
 
             }
             return false;
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if(other.gameObject.tag == "Player")
+            {
+                Debug.Log("KILLING");
+                killPlayer = true;
+                //lm.CheckForPlayerDeath(true);
+            }
         }
     }
 

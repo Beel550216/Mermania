@@ -155,6 +155,12 @@ namespace Player
                 return true;
 
             }
+            /*if(lm.killPlayer == true)
+            {
+                Debug.Log("Dead");
+                return true;
+            }*/
+
             return false;
         }
 

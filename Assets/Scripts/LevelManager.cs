@@ -1,8 +1,10 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class LevelManager : MonoBehaviour
 
     public GameObject inventory;
     public GameObject map;
+
+    public int stone = 0;
+
 
     [SerializeField] private Transform mainCam;
     [SerializeField] public int depth = -21;
@@ -25,9 +30,14 @@ public class LevelManager : MonoBehaviour
     //public List<GameObject> collectibles = new List<GameObject>();
     public List<string> collectibles = new List<string>();
 
+    public TMP_Text stoneText;
+    public TMP_Text coconutText;
+
     void Start()
     {
         SceneCheck();
+        //killPlayer = false;
+        //CheckForPlayerDeath(false);
     }
 
     // Update is called once per frame
@@ -45,6 +55,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Effects " + enabled);
 
         CheckForKeys();
+
     }
 
 
@@ -118,6 +129,7 @@ public class LevelManager : MonoBehaviour
             if(Time.timeScale == 1)
             {
                 Debug.Log("PRESSED X KEY");
+                UpdateInventory();
                 inventory.SetActive(true);
                 Pause();
             }
@@ -145,4 +157,40 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+
+    public void UpdateInventory()
+    {
+        int stoneCount = 0;
+        int coconutCount = 0;
+
+        for (int i = 0; i < collectibles.Count; i++)
+        {
+            if (collectibles[i] == "Stone")
+            {
+                stoneCount++;
+            }
+            if (collectibles[i] == "Coconut")
+            {
+                coconutCount++;
+            }
+        }
+
+        stoneText.text = stoneCount.ToString();
+        coconutText.text = coconutCount.ToString();
+        Debug.Log("STONE " + stoneCount);
+    }
+
+    /*public void CheckForPlayerDeath(bool kill)
+    {
+        if(kill == true) //change this to if player has reset
+        {
+            Debug.Log("PLAYER DEAD");
+            killPlayer = true;
+        }
+        else
+        {
+            killPlayer = false;
+        }
+    }*/
+
 }
