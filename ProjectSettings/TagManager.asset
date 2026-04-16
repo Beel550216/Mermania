@@ -9,6 +9,7 @@ TagManager:
   - Comb
   - Inventory
   - Stone
+  - Kiosk
   layers:
   - Default
   - TransparentFX
