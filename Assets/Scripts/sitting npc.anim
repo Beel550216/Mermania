@@ -456,6 +456,17 @@ AnimationClip:
     classID: 23
     script: {fileID: 0}
     flags: 2
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: 2100000, guid: f7d6de593c2147a4e802c39207341f15, type: 2}
+    - time: 0.41666666
+      value: {fileID: 2100000, guid: f139f59d03182ac418e2dadcb6cf3edc, type: 2}
+    attribute: 'm_Materials.Array.data[0]'
+    path: necklace chain silver.001
+    classID: 23
+    script: {fileID: 0}
+    flags: 2
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -563,6 +574,15 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
+      path: 1260299536
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
       path: 2464664141
       attribute: 1
       script: {fileID: 0}
@@ -619,6 +639,8 @@ AnimationClip:
     pptrCurveMapping:
     - {fileID: 2100000, guid: e6183f1f827470a4c9f8903ac3beaa84, type: 2}
     - {fileID: 2100000, guid: e6183f1f827470a4c9f8903ac3beaa84, type: 2}
+    - {fileID: 2100000, guid: f7d6de593c2147a4e802c39207341f15, type: 2}
+    - {fileID: 2100000, guid: f139f59d03182ac418e2dadcb6cf3edc, type: 2}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -13,6 +12,7 @@ public class LevelManager : MonoBehaviour
     public bool inWater;
 
     public GameObject inventory;
+    public GameObject pause;
     public GameObject kiosk;
     public GameObject map;
 
@@ -56,6 +56,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Effects " + enabled);
 
         CheckForKeys();
+        CheckPause();
 
     }
 
@@ -97,6 +98,18 @@ public class LevelManager : MonoBehaviour
     public void Play()
     {
         Time.timeScale = 1;
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void CheckPause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pause.SetActive(true);
+        }
     }
 
     private void EnableEffects(bool enable)
