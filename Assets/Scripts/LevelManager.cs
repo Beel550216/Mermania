@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
     public bool inWater;
 
     public GameObject inventory;
+    public GameObject kiosk;
     public GameObject map;
 
     public int stone = 0;
@@ -130,6 +131,7 @@ public class LevelManager : MonoBehaviour
             {
                 Debug.Log("PRESSED X KEY");
                 UpdateInventory();
+                kiosk.SetActive(false);
                 inventory.SetActive(true);
                 Pause();
             }

@@ -3,17 +3,18 @@ using UnityEngine;
 public class Collectible : MonoBehaviour
 {
     public LevelManager lm;
+    public GameObject lmObject;
 
     public AudioManager audioManager;
 
     private void Awake()
     {
-        lm = GetComponent<LevelManager>();
+        //lm = GetComponent<LevelManager>();
     }
 
     void Start()
     {
-        lm = GetComponent<LevelManager>();
+        lm = lmObject.GetComponent<LevelManager>();
     }
 
     // Update is called once per frame

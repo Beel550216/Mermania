@@ -38,7 +38,7 @@ namespace Player
         public float turnSmoothTime = 0.1f;
 
         public LevelManager lm;
-
+        public GameObject lmObject;
         public StateMachine sm;
 
         public AudioManager audioManager;
@@ -59,6 +59,7 @@ namespace Player
             rb  = GetComponent<Rigidbody>();
             anim  = GetComponent<Animator>();
             audioManager = GetComponent<AudioManager>();
+            lm = lmObject.GetComponent<LevelManager>();
 
             //add variables here to be shared across all states
 
@@ -80,7 +81,7 @@ namespace Player
         }
         private void Awake()
         {
-            lm = GetComponent<LevelManager>();
+            //lm = GetComponent<LevelManager>();
         }
 
         void FixedUpdate()
