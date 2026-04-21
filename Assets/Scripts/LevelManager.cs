@@ -1,9 +1,11 @@
+﻿using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Rendering.CameraUI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -31,9 +33,18 @@ public class LevelManager : MonoBehaviour
     //public List<GameObject> collectibles = new List<GameObject>();
     public List<string> collectibles = new List<string>();
 
+    public List<string> removeCollectible = new List<string>();
+
     public TMP_Text stoneText;
     public TMP_Text coconutText;
+    public TMP_Text combText;
 
+    public float bonus = 1;
+    public float moneyAmount;
+
+    public int soldAmount = 0;
+    public TMP_Text currentTotalText;
+    public TMP_Text moneyTotal;
     void Start()
     {
         SceneCheck();
@@ -177,6 +188,7 @@ public class LevelManager : MonoBehaviour
     {
         int stoneCount = 0;
         int coconutCount = 0;
+        int combCount = 0;
 
         for (int i = 0; i < collectibles.Count; i++)
         {
@@ -188,11 +200,71 @@ public class LevelManager : MonoBehaviour
             {
                 coconutCount++;
             }
+            if (collectibles[i] == "Comb")
+            {
+                combCount++;
+            }
         }
 
         stoneText.text = stoneCount.ToString();
         coconutText.text = coconutCount.ToString();
+        combText.text = combCount.ToString();
         Debug.Log("STONE " + stoneCount);
+    }
+
+    public void AddSellItem(string item)
+    {
+        //int soldAmount;
+
+        removeCollectible.Add(item);
+        TotalSell();
+
+    }
+
+    public void TotalSell()
+    {
+        for (int i = 0; i < removeCollectible.Count; i++)
+        {
+            if (removeCollectible[i] == "Stone")
+            {
+                soldAmount = soldAmount + 20;
+
+            }
+            if (removeCollectible[i] == "Coconut")
+            {
+                soldAmount = soldAmount + 30;
+            }
+            if (removeCollectible[i] == "Comb")
+            {
+                soldAmount = soldAmount + 150;
+            }
+
+        }
+
+        currentTotalText.text = soldAmount.ToString();
+    }
+
+
+
+
+    public void SellItem()
+    {
+        for (int i = 0; i < removeCollectible.Count; i++)
+        {
+            collectibles.Remove(removeCollectible[i]);
+            //selling the collectible removes that collectible from players inventory
+
+
+            removeCollectible.Remove(removeCollectible[i]);
+            //processed this collectiblee (added it to total), so can remove from the main selling list
+
+        }
+
+        moneyAmount = moneyAmount + (soldAmount * bonus);
+        moneyTotal.text = moneyAmount.ToString();
+
+        //(Get Amount that the player has) *(sell amount* bonus(base bonus = 1)) → Output to text
+
     }
 
     /*public void CheckForPlayerDeath(bool kill)
