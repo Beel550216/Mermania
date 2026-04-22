@@ -28,7 +28,6 @@ namespace Player
         public float jumpHeight = 3;
         public Vector3 velocity;
         public bool isGrounded;
-        public Rigidbody rb;
 
         public Transform groundCheck;
         public float groundDistance = 0.4f;
@@ -56,7 +55,7 @@ namespace Player
         private void Start()
         {
             sm = gameObject.AddComponent<StateMachine>();
-            rb  = GetComponent<Rigidbody>();
+            //rb  = GetComponent<Rigidbody>();
             anim  = GetComponent<Animator>();
             audioManager = GetComponent<AudioManager>();
             lm = lmObject.GetComponent<LevelManager>();
@@ -92,10 +91,12 @@ namespace Player
         // Update is called once per frame
         void Update()
         {
+
+            sm.CurrentState.LogicUpdate();
+
             velocity.y += gravity * Time.deltaTime; //gravity
             controller.Move(velocity * Time.deltaTime);
 
-            sm.CurrentState.LogicUpdate();
 
             /*
             //jump

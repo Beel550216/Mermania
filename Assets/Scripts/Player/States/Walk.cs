@@ -24,6 +24,9 @@ namespace Player
         }
         public override void LogicUpdate()
         {
+            //player.velocity.y += player.gravity * Time.deltaTime; //gravity
+            //player.controller.Move(player.velocity * Time.deltaTime);
+
             //check death
             if (player.CheckForDeath() == true)
             {
@@ -76,6 +79,7 @@ namespace Player
 
         public override void PhysicsUpdate()
         {
+
             player.gravity = -9.81f;  //edit this too
             //player.rb.AddForce(player.transform.up * 100f); //edit this
         }

@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Rendering.CameraUI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -42,9 +41,23 @@ public class LevelManager : MonoBehaviour
     public float bonus = 1;
     public float moneyAmount;
 
-    public int soldAmount = 0;
+    public float soldAmount = 0;
+    public float buyAmount = 0;
     public TMP_Text currentTotalText;
     public TMP_Text moneyTotal;
+    
+    
+    public float profitBuyPrice = 1000;
+    public float waterBuyPrice = 1000;
+    public float speedBuyPrice = 1000;
+    public float toolBuyPrice = 1000;
+
+    public int stoneCount = 0;
+    public int coconutCount = 0;
+    public int combCount = 0;
+
+    public List<TMP_Text> buyItemsList = new List<TMP_Text>();
+
     void Start()
     {
         SceneCheck();
@@ -186,9 +199,6 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateInventory()
     {
-        int stoneCount = 0;
-        int coconutCount = 0;
-        int combCount = 0;
 
         for (int i = 0; i < collectibles.Count; i++)
         {
@@ -216,9 +226,100 @@ public class LevelManager : MonoBehaviour
     {
         //int soldAmount;
 
+        //if(collectibles)
+
         removeCollectible.Add(item);
         TotalSell();
 
+    }
+
+    public void BuyItem(string item)
+    {
+        //int soldAmount;
+
+        //removeCollectible.Add(item);
+        //TotalSell();
+
+        //if(moneyAmount >= buyAmount)
+
+        if (item == "Speed Boost")
+        {
+            buyAmount = speedBuyPrice;
+            //CheckFunds(speedBuyPrice);
+
+            if(CheckFunds(speedBuyPrice) == true)
+            {
+                speedBuyPrice = speedBuyPrice * 1.5f;
+                RemoveMoney(buyAmount);
+            }
+
+            buyItemsList[0].text = speedBuyPrice.ToString();
+        }
+        if (item == "Water Boost")
+        {
+            buyAmount = waterBuyPrice;
+
+            if (CheckFunds(waterBuyPrice) == true)
+            {
+                waterBuyPrice = waterBuyPrice * 1.5f;
+                RemoveMoney(buyAmount);
+            }
+
+            buyItemsList[1].text = waterBuyPrice.ToString();
+        }
+        if (item == "Tool Boost")
+        {
+            buyAmount = toolBuyPrice;
+
+            if (CheckFunds(speedBuyPrice) == true)
+            {
+                toolBuyPrice = toolBuyPrice * 1.5f;
+                RemoveMoney(buyAmount);
+            }
+
+            buyItemsList[2].text = toolBuyPrice.ToString();
+        }
+        if (item == "Profit Boost")
+        {
+            buyAmount = profitBuyPrice;
+
+            if (CheckFunds(profitBuyPrice) == true)  //if players funds are >= the amount that this costs, they can buy it
+            {
+                bonus = bonus * 1.5f;
+
+                profitBuyPrice = profitBuyPrice * 1.5f;    //price for that item increases
+                RemoveMoney(buyAmount);
+            }
+
+            buyItemsList[3].text = profitBuyPrice.ToString();
+        }
+
+
+    }
+
+    private bool CheckFunds(float price)
+    {
+        if(moneyAmount >= price)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void RemoveMoney(float buyAmount)
+    {
+        moneyAmount = moneyAmount - buyAmount;
+        moneyTotal.text = moneyAmount.ToString();
+    }
+
+    private void RemoveCollectible(string collectible)
+    {
+        collectibles.Remove(collectible);
+        //selling the collectible removes that collectible from players inventory
+
+
+        removeCollectible.Remove(collectible);
+        //processed this collectiblee (added it to total), so can remove from the main selling list
     }
 
     public void TotalSell()
@@ -241,6 +342,8 @@ public class LevelManager : MonoBehaviour
 
         }
 
+        soldAmount = soldAmount * bonus;
+
         currentTotalText.text = soldAmount.ToString();
     }
 
@@ -251,18 +354,35 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < removeCollectible.Count; i++)
         {
-            collectibles.Remove(removeCollectible[i]);
-            //selling the collectible removes that collectible from players inventory
+            if (removeCollectible[i] == "Stone" && stoneCount > 0)
+            {
+                stoneCount--;
+                RemoveCollectible(removeCollectible[i]);
+            }
+            if (removeCollectible[i] == "Coconut" && coconutCount > 0)
+            {
+                coconutCount--;
+                RemoveCollectible(removeCollectible[i]);
+            }
+            if (removeCollectible[i] == "Comb" && combCount > 0)
+            {
+                combCount--;
+                RemoveCollectible(removeCollectible[i]);
+            }
+            else
+            {
+                //change text to display "ERROR" or like "not enough funds :("
+                break;
+            }
 
-
-            removeCollectible.Remove(removeCollectible[i]);
-            //processed this collectiblee (added it to total), so can remove from the main selling list
 
         }
 
         moneyAmount = moneyAmount + (soldAmount * bonus);
         moneyTotal.text = moneyAmount.ToString();
 
+        soldAmount = 0;
+        currentTotalText.text = soldAmount.ToString();
         //(Get Amount that the player has) *(sell amount* bonus(base bonus = 1)) → Output to text
 
     }

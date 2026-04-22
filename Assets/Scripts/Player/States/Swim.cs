@@ -64,7 +64,7 @@ namespace Player
         public override void PhysicsUpdate()
         {
             player.gravity = 9f;  //edit this too
-            player.rb.AddForce(player.transform.up * 50f); //edit this
+            //player.rb.AddForce(player.transform.up * 50f); //edit this
         }
 
         public override void Exit()
