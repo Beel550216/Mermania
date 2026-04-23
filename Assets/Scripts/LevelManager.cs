@@ -140,6 +140,7 @@ public class LevelManager : MonoBehaviour
     {
         if (enable)
         {
+            RenderSettings.fogDensity = 0.01f;
             RenderSettings.fog = true;
             postProcessing.profile = underwaterPostProcessing;
         }
