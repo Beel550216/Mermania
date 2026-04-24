@@ -12,6 +12,8 @@ namespace Player
        
         public override void Enter()
         {
+            player.anim.Play("Dead");
+
             //currentPlayerModel = playerModelPrefab[2];  //2 = 3
 
             Debug.Log("ENTERED DEATH STATE");

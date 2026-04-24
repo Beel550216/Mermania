@@ -31,6 +31,7 @@ public class Collectible : MonoBehaviour
             string type = gameObject.tag.ToString();
             Debug.Log(type + " Collected");
             lm.collectibles.Add(type);
+            //lm.UpdateInventory();
 
             Destroy(gameObject);
 

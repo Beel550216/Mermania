@@ -5,7 +5,7 @@ namespace Player
 {
     public class SwimState : State
     {
-        private float speed = 12;
+        private float speed = 15;
         float turnSmoothVelocity;
         public float turnSmoothTime = 0.1f;
 
@@ -29,13 +29,13 @@ namespace Player
                 if (player.CheckForMovement() == false)
                 {
                     player.gravity = -9.81f;
-                    player.anim.Play("idle");
+                    player.anim.SetBool("idle", true);
                     player.sm.ChangeState(player.idleState);
 
                 }
                 else
                 {
-                    player.anim.Play("walk");
+                    player.anim.SetBool("walk", true);
                     sm.ChangeState(player.walkState);
                 }
             }
@@ -63,7 +63,7 @@ namespace Player
 
         public override void PhysicsUpdate()
         {
-            player.gravity = 9f;  //edit this too
+            player.gravity = 2f;  //edit this too
             //player.rb.AddForce(player.transform.up * 50f); //edit this
         }
 

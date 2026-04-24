@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     public GameObject pause;
     public GameObject kiosk;
     public GameObject map;
+    public GameObject deadScreen;
 
     public int stone = 0;
 
@@ -200,9 +201,13 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateInventory()
     {
+        stoneCount = 0;
+        coconutCount = 0;
+        combCount = 0;
 
         for (int i = 0; i < collectibles.Count; i++)
         {
+
             if (collectibles[i] == "Stone")
             {
                 stoneCount++;
@@ -218,6 +223,8 @@ public class LevelManager : MonoBehaviour
         }
 
         stoneText.text = stoneCount.ToString();
+
+        Debug.Log(stoneCount);
         coconutText.text = coconutCount.ToString();
         combText.text = combCount.ToString();
         Debug.Log("STONE " + stoneCount);
@@ -344,6 +351,7 @@ public class LevelManager : MonoBehaviour
         }
 
         soldAmount = soldAmount * bonus;
+        soldAmount = Mathf.Round(soldAmount * 100f)/ 100f;
 
         currentTotalText.text = soldAmount.ToString();
     }
@@ -373,18 +381,26 @@ public class LevelManager : MonoBehaviour
             else
             {
                 //change text to display "ERROR" or like "not enough funds :("
+                Debug.Log("ERROR: PLAYER DOESN'T HAVE THIS ITEM!");
                 break;
             }
 
 
         }
 
-        moneyAmount = moneyAmount + (soldAmount * bonus);
+        moneyAmount = moneyAmount + (Mathf.Round(soldAmount * bonus * 100f) /100f); //editied this
         moneyTotal.text = moneyAmount.ToString();
 
         soldAmount = 0;
         currentTotalText.text = soldAmount.ToString();
         //(Get Amount that the player has) *(sell amount* bonus(base bonus = 1)) → Output to text
+
+    }
+
+    public void Dead()
+    {
+        deadScreen.SetActive(true);
+        Time.timeScale = 0;
 
     }
 

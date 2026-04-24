@@ -16,7 +16,7 @@ namespace Player
 
         public override void Enter()
         {
-            //player.anim.Play("idle");
+            player.anim.Play("idle");
             Debug.Log("ENTERED IDLE STATE");
         }
         public override void LogicUpdate()

@@ -76,7 +76,6 @@ namespace Player
 
             sm.Init(idleState);
 
-
         }
         private void Awake()
         {
@@ -151,6 +150,8 @@ namespace Player
 
         public bool CheckForDeath()
         {
+            ///timer.remainingTime = 15f;
+
             if (timer.remainingTime <= 0.1f)
             {
                 Debug.Log("Dead");
@@ -166,12 +167,23 @@ namespace Player
             return false;
         }
 
+        public void LMDead()
+        {
+            lm.Dead();
+        }
+
         void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Water"))
             {
                 inWater = true;
                 print("in Water");
+            }
+
+            if (other.tag == "Stone")
+            {
+                anim.Play("mine");
+
             }
         }
 
@@ -216,6 +228,8 @@ namespace Player
         {
             //AudioManager.instance.PlaySFX(sfx);
         }
+
+
 
 
     }
