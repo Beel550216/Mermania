@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
 
 
     [SerializeField] private Transform mainCam;
+    public GameObject mainCamGO;
     [SerializeField] public int depth = -21;
 
     [SerializeField] private Volume postProcessing;
@@ -61,6 +62,10 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        GameObject mainCamGO = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCam = mainCamGO.GetComponent<Transform>();
+        //mainCamGO = GetComponent(FindGameObjectWithTag("MainCamera"));
+        //mainCam = gameObject.FindWithTag("Main Camera").Transform;
         SceneCheck();
         //killPlayer = false;
         //CheckForPlayerDeath(false);
@@ -229,17 +234,93 @@ public class LevelManager : MonoBehaviour
         combText.text = combCount.ToString();
         Debug.Log("STONE " + stoneCount);
     }
+    
+    public int stoneSellCount = 1;
+    public int coconutSellCount = 1;
 
     public void AddSellItem(string item)
     {
         //int soldAmount;
 
         //if(collectibles)
+        UpdateInventory();
 
-        removeCollectible.Add(item);
-        TotalSell();
+            if (item == "Stone" && stoneSellCount <= stoneCount)
+            {
+                stoneSellCount++;
+
+                //if(stoneSellCount <= stoneCount)
+               // {
+                    //soldAmount = soldAmount + 20;
+                    Debug.Log("STONE COUNT" + stoneSellCount);
+                    Debug.Log("CURRENT STONE COUNT" + stoneCount);
+                    Succeeded(item);
+               // }
+
+            }
+            if (item == "Coconut" && coconutSellCount <= stoneCount) //STOPS INFINTELY BUYING
+            {
+                coconutSellCount++;
+                Debug.Log("COCONUT COUNT" + coconutSellCount);
+                Debug.Log("CURRENT COCONUT COUNT" + coconutCount);
+                Succeeded(item);
+
+                //soldAmount = soldAmount + 30;
+            }
+            if (item == "Comb")
+            {
+                //soldAmount = soldAmount + 150;
+            }
+            else
+            {
+                Debug.Log("TRANSACTION FAILED :(");
+                //return;
+                Failed();
+            }
 
     }
+
+    public void Failed()
+    {
+        Debug.Log("FAILED :(");
+    }
+
+    public void Succeeded(string item)
+    {
+        removeCollectible.Add(item);
+        //Debug.Log("STONE TOTAL COUNT: " + removeCollectible.Count);
+        TotalSell();
+        Debug.Log("SUCCEEDED :)");
+    }
+
+     public void TotalSell()
+    {
+        for (int i = 0; i < removeCollectible.Count; i++)
+        {
+            if (removeCollectible[i] == "Stone")
+            {
+                soldAmount = soldAmount + 20;
+                Debug.Log("STONE SOLD");
+
+            }
+            if (removeCollectible[i] == "Coconut")
+            {
+                soldAmount = soldAmount + 30;
+            }
+            if (removeCollectible[i] == "Comb")
+            {
+                soldAmount = soldAmount + 150;
+            }
+
+        }
+
+        soldAmount = soldAmount * bonus;
+        soldAmount = Mathf.Round(soldAmount * 100f)/ 100f;
+
+        currentTotalText.text = soldAmount.ToString();
+    }
+
+
 
     public void BuyItem(string item)
     {
@@ -330,32 +411,6 @@ public class LevelManager : MonoBehaviour
         //processed this collectiblee (added it to total), so can remove from the main selling list
     }
 
-    public void TotalSell()
-    {
-        for (int i = 0; i < removeCollectible.Count; i++)
-        {
-            if (removeCollectible[i] == "Stone")
-            {
-                soldAmount = soldAmount + 20;
-
-            }
-            if (removeCollectible[i] == "Coconut")
-            {
-                soldAmount = soldAmount + 30;
-            }
-            if (removeCollectible[i] == "Comb")
-            {
-                soldAmount = soldAmount + 150;
-            }
-
-        }
-
-        soldAmount = soldAmount * bonus;
-        soldAmount = Mathf.Round(soldAmount * 100f)/ 100f;
-
-        currentTotalText.text = soldAmount.ToString();
-    }
-
 
 
 
@@ -363,27 +418,36 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < removeCollectible.Count; i++)
         {
-            if (removeCollectible[i] == "Stone" && stoneCount > 0)
+            Debug.Log("TOTAL: " + i);
+            Debug.Log("TOTAL FR: " + removeCollectible.Count);
+            if (removeCollectible[i] == "Stone" && stoneCount > 0) // && stoneCount > 0
             {
                 stoneCount--;
-                RemoveCollectible(removeCollectible[i]);
+
+                collectibles.Remove(removeCollectible[i]);
+                removeCollectible.Remove(removeCollectible[i]);
+                //RemoveCollectible(removeCollectible[i]);
             }
             if (removeCollectible[i] == "Coconut" && coconutCount > 0)
             {
                 coconutCount--;
+                collectibles.Remove(removeCollectible[i]);
                 RemoveCollectible(removeCollectible[i]);
             }
             if (removeCollectible[i] == "Comb" && combCount > 0)
             {
                 combCount--;
+                collectibles.Remove(removeCollectible[i]);
                 RemoveCollectible(removeCollectible[i]);
             }
             else
             {
                 //change text to display "ERROR" or like "not enough funds :("
                 Debug.Log("ERROR: PLAYER DOESN'T HAVE THIS ITEM!");
-                break;
+                //break;
             }
+
+            Debug.Log("TOTAL LOOP COMPLETED");
 
 
         }
@@ -393,6 +457,12 @@ public class LevelManager : MonoBehaviour
 
         soldAmount = 0;
         currentTotalText.text = soldAmount.ToString();
+
+        stoneSellCount = 1;
+        coconutSellCount = 1;
+        Debug.Log("NEW STONE AMOUNT:" + stoneSellCount);
+
+        UpdateInventory(); //NEEDS TO UPDATE OTHERWISE IT WILL COUNT THE ITEMS THAT YOU JUST SOLD
         //(Get Amount that the player has) *(sell amount* bonus(base bonus = 1)) → Output to text
 
     }
