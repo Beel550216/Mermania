@@ -258,7 +258,7 @@ public class LevelManager : MonoBehaviour
                // }
 
             }
-            if (item == "Coconut" && coconutSellCount <= stoneCount) //STOPS INFINTELY BUYING
+            if (item == "Coconut" && coconutSellCount <= coconutCount) //STOPS INFINTELY BUYING
             {
                 coconutSellCount++;
                 Debug.Log("COCONUT COUNT" + coconutSellCount);
@@ -295,7 +295,7 @@ public class LevelManager : MonoBehaviour
 
      public void TotalSell()
     {
-        for (int i = 0; i < removeCollectible.Count; i++)
+        for (int i = 0; i < removeCollectible.Count; i++) //WAS ONLY DOING LESS THAN
         {
             if (removeCollectible[i] == "Stone")
             {
@@ -306,6 +306,7 @@ public class LevelManager : MonoBehaviour
             if (removeCollectible[i] == "Coconut")
             {
                 soldAmount = soldAmount + 30;
+                Debug.Log("COCONUT SOLD");
             }
             if (removeCollectible[i] == "Comb")
             {
