@@ -11,24 +11,28 @@ public class VolumeSettings : MonoBehaviour
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider sfxSlider;
 
-    [SerializeField] Slider ambianceSlider;
+   // [SerializeField] Slider ambianceSlider;
 
+    public AudioManager audioManager;
+    public GameObject audioManagerObject;
 
     public const string Mixer_Music = "MusicVolume";
     public const string Mixer_SFX = "SFXVolume";
 
-    public const string Mixer_Ambiance = "AmbianceVolume";
+   // public const string Mixer_Ambiance = "AmbianceVolume";
 
     void Awake()
     {
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         sfxSlider.onValueChanged.AddListener(SetSFXVolume);
 
-        ambianceSlider.onValueChanged.AddListener(SetAmbianceVolume);
+       // ambianceSlider.onValueChanged.AddListener(SetAmbianceVolume);
     }
 
     void Start()
     {
+        audioManager = audioManagerObject.GetComponent<AudioManager>();
+
         musicSlider.value = PlayerPrefs.GetFloat(AudioManager.Music_Key, 1f);
         sfxSlider.value = PlayerPrefs.GetFloat(AudioManager.SFX_Key, 1f);
 
@@ -44,19 +48,36 @@ public class VolumeSettings : MonoBehaviour
     void SetMusicVolume(float value)
     {
         mixer.SetFloat(Mixer_Music, Mathf.Log10(value)*20);
+
+        
+        //audioManager.PlaySFX(2);
+        string newValue = value.ToString();
+
+        Debug.Log("NEW VALUE" + newValue);
+
+        if(!audioManager.sfxSource.isPlaying)
+        {
+            Debug.Log("PLAYING SFX");
+            audioManager.PlaySFX(2);
+        }
     }
 
     void SetSFXVolume(float value)
     {
         mixer.SetFloat(Mixer_SFX, Mathf.Log10(value)*20);
 
+        if(!audioManager.sfxSource.isPlaying)
+        {
+            Debug.Log("PLAYING SFX");
+            audioManager.PlaySFX(2);
+        }
     }
 
-    void SetAmbianceVolume(float value)
+   /* void SetAmbianceVolume(float value)
     {
         mixer.SetFloat(Mixer_Ambiance, Mathf.Log10(value) * 20);
 
-    }
+    }*/
 
 
 }

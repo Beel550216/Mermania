@@ -8,8 +8,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioMixer mixer;
 
     
-    [SerializeField] AudioSource sfxSource;
-    [SerializeField] AudioSource backgroundSource;
+    [SerializeField] public AudioSource sfxSource;
+    [SerializeField] public AudioSource backgroundSource;
     [SerializeField] List<AudioClip> sfxClips = new List<AudioClip>();
     
 
