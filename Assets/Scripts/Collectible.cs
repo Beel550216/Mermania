@@ -6,6 +6,7 @@ public class Collectible : MonoBehaviour
     public GameObject lmObject;
 
     public AudioManager audioManager;
+    public GameObject audioManagerObject;
 
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class Collectible : MonoBehaviour
     void Start()
     {
         lm = lmObject.GetComponent<LevelManager>();
+        audioManager = audioManagerObject.GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -32,6 +34,15 @@ public class Collectible : MonoBehaviour
             Debug.Log(type + " Collected");
             lm.collectibles.Add(type);
             //lm.UpdateInventory();
+
+            if(type == "Stone")
+            {
+                audioManager.PlaySFX(3);
+            }
+            if(type == "Coconut")
+            {
+                audioManager.PlaySFX(5);
+            }
 
             Destroy(gameObject);
 
