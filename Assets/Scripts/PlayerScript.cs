@@ -41,6 +41,7 @@ namespace Player
         public StateMachine sm;
 
         public AudioManager audioManager;
+        public GameObject audioManagerObject;
 
         public Animator anim;
 
@@ -59,6 +60,7 @@ namespace Player
             anim  = GetComponent<Animator>();
             audioManager = GetComponent<AudioManager>();
             lm = lmObject.GetComponent<LevelManager>();
+            audioManager = audioManagerObject.GetComponent<AudioManager>();
 
             //add variables here to be shared across all states
 
@@ -75,6 +77,8 @@ namespace Player
             deathState = new DeathState(this, sm);
 
             sm.Init(idleState);
+
+            audioManager.PlayBGM(1);
 
         }
         private void Awake()
@@ -176,6 +180,11 @@ namespace Player
         {
             if (other.gameObject.CompareTag("Water"))
             {
+                if(audioManager.CurrentBGM() == 1)
+                {
+                    audioManager.StopBGM();
+                    audioManager.PlayBGM(0);
+                }
                 inWater = true;
                 print("in Water");
             }
@@ -191,6 +200,11 @@ namespace Player
         {
             if (other.gameObject.CompareTag("Water"))
             {
+                if(audioManager.CurrentBGM() == 0)
+                {
+                    audioManager.StopBGM();
+                    audioManager.PlayBGM(1);
+                }
                 inWater = false;
                 print("out Water");
             }

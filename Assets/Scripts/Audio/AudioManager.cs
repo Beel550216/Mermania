@@ -9,13 +9,14 @@ public class AudioManager : MonoBehaviour
 
     
     [SerializeField] public AudioSource sfxSource;
-    [SerializeField] public AudioSource backgroundSource;
+    [SerializeField] public AudioSource bgmSource;
     [SerializeField] List<AudioClip> sfxClips = new List<AudioClip>();
-    
+    [SerializeField] List<AudioClip> bgmClips = new List<AudioClip>();
 
     public const string Music_Key = "musicVol";
     public const string SFX_Key = "sfxVol";  //_
     
+    private int currentClip;
 
     void Awake()
     {
@@ -42,7 +43,7 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        backgroundSource.Play();
+        bgmSource.Play();
     }
 
     public void PlaySFX(int num)
@@ -55,6 +56,25 @@ public class AudioManager : MonoBehaviour
     {
         AudioClip clip = sfxClips[num];
         sfxSource.Stop();
+    }
+
+    public void PlayBGM(int num)
+    {
+        AudioClip clip = bgmClips[num];
+        bgmSource.clip = clip;
+        bgmSource.Play();
+
+        currentClip = num;
+    }
+
+    public int CurrentBGM()
+    {
+        return currentClip;
+    }
+
+    public void StopBGM()
+    {
+        bgmSource.Stop();
     }
 
 }

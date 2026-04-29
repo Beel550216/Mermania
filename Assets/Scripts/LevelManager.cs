@@ -30,6 +30,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private VolumeProfile surfacePostProcessing;
     [SerializeField] private VolumeProfile underwaterPostProcessing;
 
+    public GameObject audioManagerObject;
+    public AudioManager audioManager;
 
     //public List<GameObject> collectibles = new List<GameObject>();
     public List<string> collectibles = new List<string>();
@@ -69,6 +71,8 @@ public class LevelManager : MonoBehaviour
         SceneCheck();
         //killPlayer = false;
         //CheckForPlayerDeath(false);
+
+        // /audioManager = audioManagerObject.GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -109,6 +113,7 @@ public class LevelManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Game")
         {
+            //audioManager.PlayBGM(1);
             //Do stuff here
 
             //counter = 0;
