@@ -62,6 +62,11 @@ public class LevelManager : MonoBehaviour
 
     public List<TMP_Text> buyItemsList = new List<TMP_Text>();
 
+    public List<GameObject> tutorialList = new List<GameObject>();
+    public List<string> tutorialTextList = new List<string>();
+    private int tutorialTextNum = 0;
+    public TMP_Text tutorialText;
+
     void Start()
     {
         GameObject mainCamGO = GameObject.FindGameObjectWithTag("MainCamera");
@@ -71,6 +76,8 @@ public class LevelManager : MonoBehaviour
         SceneCheck();
         //killPlayer = false;
         //CheckForPlayerDeath(false);
+        TutorialList();
+        TutorialText();
 
         // /audioManager = audioManagerObject.GetComponent<AudioManager>();
     }
@@ -477,6 +484,52 @@ public class LevelManager : MonoBehaviour
     {
         deadScreen.SetActive(true);
         Time.timeScale = 0;
+
+    }
+
+    public int tutorialNum;
+
+    public void TutorialText()
+    {
+        string text = tutorialTextList[tutorialNum];
+        tutorialText.text = text;
+
+        tutorialNum++;
+        Debug.Log("TUTORIAL Num " + tutorialNum);
+
+        Pause();
+
+        //if(tutorialNum == 1)
+        //{
+           // Play();
+        //}
+        if(tutorialNum == 3)
+        {
+            Pause();
+        }
+
+    }
+
+    public void TutorialList()
+    {
+        tutorialTextList.Add("Welcome to the Mermania tutorial!");
+        tutorialTextList.Add("Use the WASD keys to move");
+        tutorialTextList.Add("Press the shift key to sprint");
+
+        tutorialTextList.Add("You will start to dry out on land");
+        tutorialTextList.Add("Keep track of the water meter!");
+
+        tutorialTextList.Add("The water meter will replenish in water");
+        tutorialTextList.Add("Your mermaid form will show in water");
+        tutorialTextList.Add("To swim upwards press the space bar");
+
+        tutorialTextList.Add("Collect items by walking into them");
+        tutorialTextList.Add("These items can be traded for clams at kiosks");
+
+        tutorialTextList.Add("Clams allow you to buy upgrades");
+
+        tutorialTextList.Add("Your inventory can be viewed by pressing X");
+        tutorialTextList.Add("The world map can be viewed by pressing M");
 
     }
 

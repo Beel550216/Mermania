@@ -56,10 +56,10 @@ namespace Player
                 {
                     sm.ChangeState(player.runState);
                 }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    sm.ChangeState(player.jumpState);
-                }
+                //if (Input.GetKeyDown(KeyCode.Space))
+                //{
+                    //sm.ChangeState(player.jumpState);
+                //}
                 else
                 {
                     float horizontal = Input.GetAxisRaw("Horizontal");
