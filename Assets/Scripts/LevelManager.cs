@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -77,6 +79,7 @@ public class LevelManager : MonoBehaviour
         //killPlayer = false;
         //CheckForPlayerDeath(false);
         TutorialList();
+        Play();
         TutorialText();
 
         // /audioManager = audioManagerObject.GetComponent<AudioManager>();
@@ -132,6 +135,11 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    public void SetButton(GameObject button)
+    {
+        EventSystem.current.SetSelectedGameObject(button);
+    }
+
 
     public void Pause()
     {
@@ -146,11 +154,15 @@ public class LevelManager : MonoBehaviour
         Application.Quit();
     }
 
+    public GameObject settingsButton;
+
     public void CheckPause()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             pause.SetActive(true);
+            settingsButton = GameObject.FindGameObjectWithTag("Settings");
+            SetButton(settingsButton);
         }
     }
 
@@ -497,7 +509,7 @@ public class LevelManager : MonoBehaviour
         tutorialNum++;
         Debug.Log("TUTORIAL Num " + tutorialNum);
 
-        Pause();
+        //Pause();
 
         //if(tutorialNum == 1)
         //{
@@ -505,7 +517,7 @@ public class LevelManager : MonoBehaviour
         //}
         if(tutorialNum == 3)
         {
-            Pause();
+            //Pause();
         }
 
     }

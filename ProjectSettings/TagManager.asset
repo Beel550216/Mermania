@@ -12,6 +12,7 @@ TagManager:
   - Kiosk
   - FishingZone
   - PickupZone
+  - Settings
   layers:
   - Default
   - TransparentFX
