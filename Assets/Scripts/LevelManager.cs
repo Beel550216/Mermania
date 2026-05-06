@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 
 public class LevelManager : MonoBehaviour
@@ -34,6 +35,7 @@ public class LevelManager : MonoBehaviour
 
     public GameObject audioManagerObject;
     public AudioManager audioManager;
+    public ButtonNav buttonNav;
 
     //public List<GameObject> collectibles = new List<GameObject>();
     public List<string> collectibles = new List<string>();
@@ -69,6 +71,8 @@ public class LevelManager : MonoBehaviour
     private int tutorialTextNum = 0;
     public TMP_Text tutorialText;
 
+    //public GameObject interactText;
+
     void Start()
     {
         GameObject mainCamGO = GameObject.FindGameObjectWithTag("MainCamera");
@@ -83,6 +87,8 @@ public class LevelManager : MonoBehaviour
         TutorialText();
 
         // /audioManager = audioManagerObject.GetComponent<AudioManager>();
+
+        //buttonNav = buttonNav.AddComponent<ButtonNav>();
     }
 
     // Update is called once per frame
@@ -163,6 +169,9 @@ public class LevelManager : MonoBehaviour
             pause.SetActive(true);
             settingsButton = GameObject.FindGameObjectWithTag("Settings");
             SetButton(settingsButton);
+
+            buttonNav.JumpToSpecificElement("Settings");
+            //ButtonNav.GetComponent(JumpToElement());
         }
     }
 
@@ -182,6 +191,7 @@ public class LevelManager : MonoBehaviour
 
     }
 
+
     void CameraMovement()
     {
         //new Vector3(212.3, 33, -185.1);
@@ -191,13 +201,13 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("KEY RUNNING");
 
-        if(Input.GetKeyDown(KeyCode.X))
+        if(Input.GetKeyDown(KeyCode.E))
         {
             //inventory = GameObject.FindWithTag("Inventory");
 
             if(Time.timeScale == 1)
             {
-                Debug.Log("PRESSED X KEY");
+                Debug.Log("PRESSED E KEY");
                 UpdateInventory();
                 kiosk.SetActive(false);
                 inventory.SetActive(true);
@@ -498,6 +508,13 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 0;
 
     }
+
+    /*public bool InteractPressed()
+    {
+        if(in an interaction zone && GetKey.X)
+        return true;
+
+    }*/
 
     public int tutorialNum;
 

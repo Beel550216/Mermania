@@ -4,42 +4,47 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MainMenuGUIScript : MonoBehaviour
+public class ButtonNav : MonoBehaviour
 {
+    [SerializeField] private EventSystem eventSystem;
+    [SerializeField] private Selectable elementToSelect;
 
-    public GameObject[] SelectionArray;
-    int currentSelected = 0;
+    [SerializeField] private bool showVisualization;
+    private Color navigationColour = Color.white;
 
-    void Start()
+    private void OnDrawGizmos()
     {
-        EventSystem.current.SetSelectedGameObject(SelectionArray[currentSelected], null);
+        if (!showVisualization)
+            return;
+        if (elementToSelect == null)
+            return;
+
+        Gizmos.color = navigationColour;
+        Gizmos.DrawLine(gameObject.transform.position, elementToSelect.transform.position);
     }
 
-    void Update()
+    private void Reset()
     {
-        Debug.Log("CurrentSelect " + currentSelected + "Array is " + SelectionArray[currentSelected]);
+        eventSystem = FindFirstObjectByType<EventSystem>();
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            currentSelected--;
-
-            if (currentSelected < 0)
-            {
-                currentSelected = 0;
-            }
-            EventSystem.current.SetSelectedGameObject(SelectionArray[currentSelected], null);
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            currentSelected++;
-
-            if (currentSelected >= SelectionArray.Length - 1)
-            {
-                currentSelected = SelectionArray.Length - 1;
-            }
-            EventSystem.current.SetSelectedGameObject(SelectionArray[currentSelected], null);
-        }
+        if (eventSystem == null)
+            Debug.Log("There is no event system in your scene :(");
     }
+
+    public void JumpToElement()
+    {
+        if (elementToSelect == null)
+            Debug.Log("ELEMENT NULL");
+
+        eventSystem.SetSelectedGameObject(elementToSelect.gameObject);
+    }
+
+    public void JumpToSpecificElement(string element)
+    {
+        GameObject elementToFind = GameObject.FindWithTag(element);
+
+        eventSystem.SetSelectedGameObject(elementToFind);
+    }
+
 }
 
