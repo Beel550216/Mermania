@@ -194,6 +194,17 @@ namespace Player
                 anim.Play("mine");
 
             }
+
+        }
+
+        void OnTriggerStay(Collider other)
+        {
+            if (other.tag == "FishingZone" && Input.GetKeyDown(KeyCode.X))
+            {
+                Debug.Log("FISHING PLEASE");
+                anim.Play("Go fish");
+
+            }
         }
 
         void OnTriggerExit(Collider other)

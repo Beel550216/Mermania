@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
-using Unity.VisualScripting;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 
 public class LevelManager : MonoBehaviour
@@ -49,6 +50,8 @@ public class LevelManager : MonoBehaviour
     public float bonus = 1;
     public float moneyAmount;
 
+    public float collectMultiplier = 1;
+
     public float soldAmount = 0;
     public float buyAmount = 0;
     public TMP_Text currentTotalText;
@@ -57,7 +60,7 @@ public class LevelManager : MonoBehaviour
     
     public float profitBuyPrice = 1000;
     public float waterBuyPrice = 1000;
-    public float speedBuyPrice = 1000;
+    public float collecterBuyPrice = 1000;
     public float toolBuyPrice = 1000;
 
     public int stoneCount = 0;
@@ -71,12 +74,18 @@ public class LevelManager : MonoBehaviour
     private int tutorialTextNum = 0;
     public TMP_Text tutorialText;
 
+    public GameObject timerGO;
+    public Timer timer;
+
     //public GameObject interactText;
 
     void Start()
     {
         GameObject mainCamGO = GameObject.FindGameObjectWithTag("MainCamera");
         mainCam = mainCamGO.GetComponent<Transform>();
+
+        GameObject timerGO = GameObject.FindGameObjectWithTag("Player");
+        timer = timerGO.GetComponent<Timer>();
         //mainCamGO = GetComponent(FindGameObjectWithTag("MainCamera"));
         //mainCam = gameObject.FindWithTag("Main Camera").Transform;
         SceneCheck();
@@ -170,7 +179,7 @@ public class LevelManager : MonoBehaviour
             settingsButton = GameObject.FindGameObjectWithTag("Settings");
             SetButton(settingsButton);
 
-            buttonNav.JumpToSpecificElement("Settings");
+            //buttonNav.JumpToSpecificElement("Settings");
             //ButtonNav.GetComponent(JumpToElement());
         }
     }
@@ -366,18 +375,19 @@ public class LevelManager : MonoBehaviour
 
         //if(moneyAmount >= buyAmount)
 
-        if (item == "Speed Boost")
+        if (item == "Collector")
         {
-            buyAmount = speedBuyPrice;
+            buyAmount = collecterBuyPrice;
             //CheckFunds(speedBuyPrice);
 
-            if(CheckFunds(speedBuyPrice) == true)
+            if(CheckFunds(collecterBuyPrice) == true)
             {
-                speedBuyPrice = speedBuyPrice * 1.5f;
+                collecterBuyPrice = collecterBuyPrice * 1.5f;
+                collectMultiplier++;
                 RemoveMoney(buyAmount);
             }
 
-            buyItemsList[0].text = speedBuyPrice.ToString();
+            buyItemsList[0].text = collecterBuyPrice.ToString();
         }
         if (item == "Water Boost")
         {
@@ -391,13 +401,14 @@ public class LevelManager : MonoBehaviour
 
             buyItemsList[1].text = waterBuyPrice.ToString();
         }
-        if (item == "Tool Boost")
+        if (item == "Add Comb")
         {
             buyAmount = toolBuyPrice;
 
-            if (CheckFunds(speedBuyPrice) == true)
+            if (CheckFunds(collecterBuyPrice) == true)
             {
                 toolBuyPrice = toolBuyPrice * 1.5f;
+                collectibles.Add("Comb");
                 RemoveMoney(buyAmount);
             }
 
@@ -499,6 +510,13 @@ public class LevelManager : MonoBehaviour
 
         UpdateInventory(); //NEEDS TO UPDATE OTHERWISE IT WILL COUNT THE ITEMS THAT YOU JUST SOLD
         //(Get Amount that the player has) *(sell amount* bonus(base bonus = 1)) → Output to text
+
+    }
+
+    public void IncreaseWater(float amount, string item)
+    {
+        timer.AddTime(amount);
+        RemoveCollectible(item);
 
     }
 

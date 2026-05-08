@@ -13,6 +13,10 @@ TagManager:
   - FishingZone
   - PickupZone
   - Settings
+  - Buy
+  - Level Manager
+  - FirstBuyButton
+  - FirstSellButton
   layers:
   - Default
   - TransparentFX

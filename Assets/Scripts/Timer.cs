@@ -43,6 +43,11 @@ public class Timer : MonoBehaviour
 
         waterMeter.text = "Water Meter: " + minutes + ":" + seconds;  //h20 (instead of 02)Tik
     }
+    public void AddTime(float time)
+    {
+        remainingTime = remainingTime + time;
+    }
+
 
     void OnTriggerEnter(Collider other)
     {

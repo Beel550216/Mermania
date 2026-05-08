@@ -44,6 +44,8 @@ public class ButtonNav : MonoBehaviour
         GameObject elementToFind = GameObject.FindWithTag(element);
 
         eventSystem.SetSelectedGameObject(elementToFind);
+
+        Debug.Log("FINDING " + elementToFind);
     }
 
 }

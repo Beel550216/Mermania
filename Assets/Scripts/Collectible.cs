@@ -32,7 +32,11 @@ public class Collectible : MonoBehaviour
             //audioManager.GetComponent<AudioManager>().PlaySFX(1);
             string type = gameObject.tag.ToString();
             Debug.Log(type + " Collected");
-            lm.collectibles.Add(type);
+
+            for(int i = 0; i < lm.collectMultiplier; i++)
+            {
+                lm.collectibles.Add(type);
+            }
             //lm.UpdateInventory();
 
             if(type == "Stone")
