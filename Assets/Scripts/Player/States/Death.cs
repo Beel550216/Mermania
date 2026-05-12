@@ -5,6 +5,8 @@ namespace Player
 { 
     public class DeathState: State
     {
+        public LevelManager lm;
+
         public DeathState(PlayerScript player, StateMachine sm) : base(player, sm)
         {
         }
@@ -12,7 +14,14 @@ namespace Player
        
         public override void Enter()
         {
-            player.anim.Play("Dead");
+            /*if(lm.killedPlayer)
+            {
+                player.anim.Play("Dead2");
+            }
+            else
+            {*/
+                player.anim.Play("Dead");
+            //}
 
             //currentPlayerModel = playerModelPrefab[2];  //2 = 3
 

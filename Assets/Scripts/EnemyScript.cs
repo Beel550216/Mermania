@@ -165,6 +165,7 @@ namespace Enemy
             {
                 Debug.Log("KILLING");
                 killPlayer = true;
+                lm.killedPlayer = true;
                 //lm.CheckForPlayerDeath(true);
             }
         }

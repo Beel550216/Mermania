@@ -24,6 +24,10 @@ namespace Player
         public override void LogicUpdate()
         {
             //check float
+            if (player.CheckForDeath() == true)
+            {
+                player.sm.ChangeState(player.deathState);
+            }
             if (player.CheckForFloat() == false)
             {
                 if (player.CheckForMovement() == false)

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Timeline.Actions.MenuPriority;
+//using static UnityEditor.Timeline.Actions.MenuPriority;
 
 
 public class LevelManager : MonoBehaviour
@@ -23,6 +23,9 @@ public class LevelManager : MonoBehaviour
     public GameObject deadScreen;
 
     public int stone = 0;
+
+    public GameObject aboveWater;
+    public GameObject npcs;
 
 
     [SerializeField] private Transform mainCam;
@@ -61,7 +64,7 @@ public class LevelManager : MonoBehaviour
     public float profitBuyPrice = 1000;
     public float waterBuyPrice = 1000;
     public float collecterBuyPrice = 1000;
-    public float toolBuyPrice = 1000;
+    public float combBuyPrice = 100;
 
     public int stoneCount = 0;
     public int coconutCount = 0;
@@ -76,6 +79,10 @@ public class LevelManager : MonoBehaviour
 
     public GameObject timerGO;
     public Timer timer;
+
+    public bool killedPlayer = false;
+
+    public GameObject firstButton;
 
     //public GameObject interactText;
 
@@ -106,16 +113,22 @@ public class LevelManager : MonoBehaviour
         if(mainCam.position.y < 34)
         {
             EnableEffects(true);
+            aboveWater.SetActive(false);
+            npcs.SetActive(false);
         }
         else
         {
             EnableEffects(false);
+            aboveWater.SetActive(true);
+            npcs.SetActive(true);
         }
         Debug.Log("Current depth " + depth);
         Debug.Log("Effects " + enabled);
 
         CheckForKeys();
         CheckPause();
+
+        ButtonCheck();
 
     }
 
@@ -129,6 +142,9 @@ public class LevelManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Menu")
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
             //Do stuff here
 
             //counter = 0;
@@ -147,6 +163,18 @@ public class LevelManager : MonoBehaviour
         }
 
         print(SceneManager.GetActiveScene().name);
+
+    }
+
+    	// Update is called once per frame
+	public void ButtonCheck () {
+
+        if (SceneManager.GetActiveScene().name == "Menu" && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)))
+        {
+
+            SetButton(firstButton);
+
+        }
 
     }
 
@@ -173,7 +201,12 @@ public class LevelManager : MonoBehaviour
 
     public void CheckPause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name == "Menu")
+        {
+            Application.Quit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name == "Game")
         {
             pause.SetActive(true);
             settingsButton = GameObject.FindGameObjectWithTag("Settings");
@@ -403,16 +436,17 @@ public class LevelManager : MonoBehaviour
         }
         if (item == "Add Comb")
         {
-            buyAmount = toolBuyPrice;
+            buyAmount = combBuyPrice;
 
-            if (CheckFunds(collecterBuyPrice) == true)
+            if (CheckFunds(combBuyPrice) == true)
             {
-                toolBuyPrice = toolBuyPrice * 1.5f;
+                combBuyPrice = combBuyPrice * 1.5f;
                 collectibles.Add("Comb");
                 RemoveMoney(buyAmount);
+                UpdateInventory();
             }
 
-            buyItemsList[2].text = toolBuyPrice.ToString();
+            buyItemsList[2].text = combBuyPrice.ToString();
         }
         if (item == "Profit Boost")
         {

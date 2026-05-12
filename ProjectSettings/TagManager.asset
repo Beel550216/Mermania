@@ -17,6 +17,7 @@ TagManager:
   - Level Manager
   - FirstBuyButton
   - FirstSellButton
+  - Siren
   layers:
   - Default
   - TransparentFX

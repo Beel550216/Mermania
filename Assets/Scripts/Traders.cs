@@ -107,7 +107,7 @@ public class Traders : MonoBehaviour
 
         }
 
-        fishingCounterText.text = fishingCount.ToString();
+        //fishingCounterText.text = fishingCount.ToString();
     }
 
 

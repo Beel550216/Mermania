@@ -22,6 +22,11 @@ namespace Player
         }
         public override void LogicUpdate()
         {
+            if (player.CheckForDeath() == true)
+            {
+                player.sm.ChangeState(player.deathState);
+            }
+            
             //check float
             if (player.CheckForFloat() == false)
             {

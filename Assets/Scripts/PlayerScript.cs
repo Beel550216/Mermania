@@ -176,6 +176,16 @@ namespace Player
             lm.Dead();
         }
 
+        void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.CompareTag("Siren"))
+            {
+                timer.remainingTime = 0f;
+                CheckForDeath();
+            }
+
+        }
+
         void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Water"))
