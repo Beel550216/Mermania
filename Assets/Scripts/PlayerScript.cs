@@ -6,12 +6,14 @@ using System.Collections.Specialized;
 //using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 //using UnityEngine.Playables;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
 
     public class PlayerScript : MonoBehaviour
     {
+        public PlayerInput playerInput;
         UnityEngine.VFX.VisualEffect vfx;
 
         public bool inWater;
@@ -53,6 +55,11 @@ namespace Player
         public SwimState swimState;
         public DeathState deathState;
 
+        public bool sprint;
+        public bool escapeMenu;
+
+        //public bool jumpPressed;
+
         private void Start()
         {
             sm = gameObject.AddComponent<StateMachine>();
@@ -61,6 +68,7 @@ namespace Player
             audioManager = GetComponent<AudioManager>();
             lm = lmObject.GetComponent<LevelManager>();
             audioManager = audioManagerObject.GetComponent<AudioManager>();
+            
 
             //add variables here to be shared across all states
 
@@ -259,13 +267,82 @@ namespace Player
             return false;
         }
 
+        public bool CheckForSprint()
+        {
+            if(sprint == true)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void PlaySFX(int sfx)
         {
             //AudioManager.instance.PlaySFX(sfx);
         }
 
 
+        public void OnJump(InputValue value)
+        {
 
+            if (value.isPressed)
+            {
+                Debug.Log("PRESSED BUTTON JUMP");
+                velocity.y = Mathf.Sqrt(5 * -2 * gravity);
+            }
+        }
+
+        public void OnInteract(InputValue value)
+        {
+
+            if (value.isPressed)
+            {
+                Debug.Log("PRESSED BUTTON INTERACT");
+                //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
+                lm.interaction = true;
+            }
+        }
+
+        public void OnSprint(InputValue value)
+        {
+
+            if (value.isPressed)
+            {
+                Debug.Log("PRESSED BUTTON SPRINT");
+                //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
+                sprint = true;
+            }
+            else
+            {
+                sprint = false;
+            }
+        }
+
+        public void OnEscape(InputValue value)
+        {
+
+            if (value.isPressed)
+            {
+                Debug.Log("PRESSED BUTTON ESCAPE");
+                //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
+                escapeMenu = true;
+            }
+            /*else
+            {
+                escapeMenu = false;
+            }*/
+        }
+
+
+        /* public void OnInteract(InputValue value)
+         {
+
+             if (value.isPressed)
+             {
+                 Debug.Log("PRESSED BUTTON INTERACT");
+                 lm.interaction = true;
+             }
+         }*/
 
     }
 

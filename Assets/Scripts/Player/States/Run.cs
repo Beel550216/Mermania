@@ -21,6 +21,7 @@ public class RunState : State
         Debug.Log("ENTERED RUN STATE");
 
     }
+
     public override void LogicUpdate()
     {
         //check death
@@ -35,31 +36,27 @@ public class RunState : State
             sm.ChangeState(player.swimState);
         }
 
+
+
         if (player.CheckForMovement() == true)
         {
-            if (Input.GetKey(KeyCode.LeftShift) == false)
+            if (player.sprint == false) //(Input.GetKey(KeyCode.LeftShift) == false)
             {
                 sm.ChangeState(player.walkState);
             }
-            else
-            {
-
-                //player.vfx.SetFloat("spawnRate", 0f);
-
-
-                float horizontal = Input.GetAxisRaw("Horizontal");
-                float vertical = Input.GetAxisRaw("Vertical");
-                Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + player.cam.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(player.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                player.transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                player.controller.Move(moveDir.normalized * 20f * Time.deltaTime);
-            }
 
         }
+
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + player.cam.eulerAngles.y;
+        float angle = Mathf.SmoothDampAngle(player.transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+        player.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+        Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        player.controller.Move(moveDir.normalized * 20f * Time.deltaTime);
     }
     public override void Exit()
     {

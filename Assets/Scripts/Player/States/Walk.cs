@@ -50,9 +50,16 @@ namespace Player
 
             }
 
-            if(player.CheckForMovement() == true)
+            if (player.CheckForSprint() == true)
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                player.sm.ChangeState(player.runState);
+
+            }
+
+
+            if (player.CheckForMovement() == true)
+            {
+                if (player.sprint == true)   //Input.GetKeyDown(KeyCode.LeftShift)
                 {
                     sm.ChangeState(player.runState);
                 }

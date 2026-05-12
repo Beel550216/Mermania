@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Player;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -82,7 +83,12 @@ public class LevelManager : MonoBehaviour
 
     public bool killedPlayer = false;
 
+    public bool interaction = false;
+
     public GameObject firstButton;
+
+    public PlayerScript player;
+    public GameObject playerObject;
 
     //public GameObject interactText;
 
@@ -93,6 +99,9 @@ public class LevelManager : MonoBehaviour
 
         GameObject timerGO = GameObject.FindGameObjectWithTag("Player");
         timer = timerGO.GetComponent<Timer>();
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        player = playerObject.GetComponent<PlayerScript>();
         //mainCamGO = GetComponent(FindGameObjectWithTag("MainCamera"));
         //mainCam = gameObject.FindWithTag("Main Camera").Transform;
         SceneCheck();
@@ -129,6 +138,7 @@ public class LevelManager : MonoBehaviour
         CheckPause();
 
         ButtonCheck();
+        InteractOff();
 
     }
 
@@ -201,12 +211,12 @@ public class LevelManager : MonoBehaviour
 
     public void CheckPause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name == "Menu")
+        if ((Input.GetKeyDown(KeyCode.Escape) || player.escapeMenu == true) && SceneManager.GetActiveScene().name == "Menu")
         {
             Application.Quit();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name == "Game")
+        if ((Input.GetKeyDown(KeyCode.Escape) || player.escapeMenu == true) && SceneManager.GetActiveScene().name == "Game")
         {
             pause.SetActive(true);
             settingsButton = GameObject.FindGameObjectWithTag("Settings");
@@ -613,6 +623,15 @@ public class LevelManager : MonoBehaviour
         tutorialTextList.Add("The world map can be viewed by pressing M");
 
     }
+    private void InteractOff()
+    {
+        if (interaction == true)
+        {
+            interaction = false;
+        }
+    }
+
+
 
     /*public void CheckForPlayerDeath(bool kill)
     {
