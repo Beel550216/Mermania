@@ -18,6 +18,8 @@ TagManager:
   - FirstBuyButton
   - FirstSellButton
   - Siren
+  - NPC1
+  - NPC2
   layers:
   - Default
   - TransparentFX

@@ -2923,6 +2923,12 @@ MonoBehaviour:
   killedPlayer: 0
   interaction: 0
   firstButton: {fileID: 0}
+  player: {fileID: 0}
+  playerObject: {fileID: 0}
+  videoPlayer: {fileID: 1215180061}
+  videoClips:
+  - {fileID: 32900000, guid: 6c5fde0a581a7f84fa85eebd88c59317, type: 3}
+  - {fileID: 32900000, guid: cfaded12d1369b94caba21ea878f7f37, type: 3}
   settingsButton: {fileID: 0}
   stoneSellCount: 1
   coconutSellCount: 1

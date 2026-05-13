@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 //using static UnityEditor.Timeline.Actions.MenuPriority;
 
 
@@ -89,6 +90,9 @@ public class LevelManager : MonoBehaviour
 
     public PlayerScript player;
     public GameObject playerObject;
+
+    public VideoPlayer videoPlayer;
+    public List<VideoClip> videoClips = new List<VideoClip>();
 
     //public GameObject interactText;
 
@@ -241,6 +245,12 @@ public class LevelManager : MonoBehaviour
             postProcessing.profile = surfacePostProcessing;
         }
 
+    }
+
+    public void ChangeCLip(int num)
+    {
+        videoPlayer.clip = videoClips[num];
+        videoPlayer.Play();
     }
 
 

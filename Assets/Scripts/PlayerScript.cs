@@ -142,6 +142,8 @@ namespace Player
             float vertical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
+            sprint = false;
+
             if (direction.magnitude >= 0.1f)
             {
                 return true;
@@ -325,7 +327,15 @@ namespace Player
             {
                 Debug.Log("PRESSED BUTTON ESCAPE");
                 //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
-                escapeMenu = true;
+
+                if(escapeMenu == true)
+                {
+                    escapeMenu = false;
+                }
+                else
+                {
+                    escapeMenu = true;
+                }
             }
             /*else
             {

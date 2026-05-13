@@ -1,4 +1,7 @@
 using Player;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,9 +18,13 @@ namespace Player
         public GameObject interact;
         public GameObject fishingText;
         public GameObject caughtFish;
+        public GameObject npcDialogue;
+        public TMP_Text npcDialogueText;
+        public TMP_Text npcNameText;
 
         public bool inInteractionZone;
         public bool atKiosk;
+        public bool atNPC;
         public bool fishing;
 
         public LevelManager lm;
@@ -29,6 +36,27 @@ namespace Player
         public TMP_Text fishingCounterText;
 
         public bool interaction = false;
+
+        public List<string> npcList = new List<string>();
+        public List<string> npcDialogues = new List<string>();
+        public List<string> npcName = new List<string>();
+
+        private void Awake()
+        {
+            npcList.Add("NPC1");
+            npcList.Add("NPC2");
+
+            npcDialogues.Add("Weather dialogue");
+            npcDialogues.Add("Allude to wanting water");
+            npcDialogues.Add("Bring 2x water bottles");
+
+            npcDialogues.Add("It's been 10 minutes, where's ____?");
+            npcDialogues.Add("Hey, can you help me find her?");
+            npcDialogues.Add("Talk to ____"); //her friend
+
+            npcName.Add("Girl A");
+            npcName.Add("Girl B");
+        }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -46,6 +74,8 @@ namespace Player
             ActivateKiosk();
             ActivateFishing();
             Fishing();
+            ActivateNPC();
+            DialoguePress();
             //LeaveKiosk();
         }
 
@@ -76,6 +106,48 @@ namespace Player
 
                 NavJumpTo("Buy");
 
+            }
+        }
+
+        private void ActivateNPC()
+        {
+            if (inInteractionZone && npcList.Contains(gameObject.tag) && lm.interaction == true)
+            {
+                //Time.timeScale = 0;
+                interact.SetActive(false);
+                //inInteractionZone = true;
+
+                Debug.Log("TALKING TO NPC");
+
+                npcDialogue.gameObject.SetActive(true);
+                atNPC = true;
+
+                if(gameObject.tag == npcList[0])
+                {
+                    dialogueNum = 0;
+                    npcDialogueText.text = npcDialogues[dialogueNum];
+                    npcNameText.text = npcName[0];
+                }
+                if (gameObject.tag == npcList[1])
+                {
+                    dialogueNum = 3;
+                    npcDialogueText.text = npcDialogues[dialogueNum];
+                    npcNameText.text = npcName[0];
+                }
+
+                //NavJumpTo("Buy");
+
+            }
+        }
+
+        public int dialogueNum;
+
+        public void DialoguePress()
+        {
+            if(lm.interaction == true && npcList.Contains(gameObject.tag) && inInteractionZone)
+            {
+                npcDialogueText.text = npcDialogues[dialogueNum];
+                dialogueNum++;
             }
         }
 
@@ -143,6 +215,8 @@ namespace Player
                 interact.SetActive(false);
                 fishingText.SetActive(false);
                 tradingScreen.SetActive(false);
+                npcDialogue.gameObject.SetActive(false);
+                atNPC = false;
 
             }
         }
