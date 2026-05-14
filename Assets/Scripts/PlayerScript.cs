@@ -193,6 +193,13 @@ namespace Player
                 timer.remainingTime = 0f;
                 CheckForDeath();
             }
+            if (other.gameObject.CompareTag("Portal"))
+            {
+                lm.end = true;
+                //timer.remainingTime = 0f;
+                //CheckForDeath();
+                //
+            }
 
         }
 

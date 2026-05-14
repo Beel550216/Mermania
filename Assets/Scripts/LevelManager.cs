@@ -94,7 +94,12 @@ public class LevelManager : MonoBehaviour
     public VideoPlayer videoPlayer;
     public List<VideoClip> videoClips = new List<VideoClip>();
 
+    public bool portalUnlocked;
+    public Transform mapCollectible;
+
     //public GameObject interactText;
+
+    public bool end = false;
 
     void Start()
     {
@@ -143,6 +148,11 @@ public class LevelManager : MonoBehaviour
 
         ButtonCheck();
         InteractOff();
+
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            ResetCollectibles();
+        }
 
     }
 
@@ -581,6 +591,23 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    public void ResetCollectibles()
+    {
+        if(Input.GetKeyDown(KeyCode.M))  //CHANGE THIS HERE
+        {
+            Debug.Log("RESET COLLECTIBLES CALLED");
+            foreach (Transform child in mapCollectible.transform)
+        {
+            if (child != null && child.gameObject != null)
+            {
+                child.gameObject.SetActive(true);
+            }
+        }
+        }
+        //transform.GetChild(0).gameObject.SetActive(false);
+    }
+    
+
     /*public bool InteractPressed()
     {
         if(in an interaction zone && GetKey.X)
@@ -641,6 +668,13 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void UnlockPortal()
+    {
+        if (moneyAmount >= 5000)
+        {
+            portalUnlocked = true;
+        }
+    }
 
 
     /*public void CheckForPlayerDeath(bool kill)

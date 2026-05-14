@@ -48,7 +48,8 @@ public class Collectible : MonoBehaviour
                 audioManager.PlaySFX(5);
             }
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
 
         }
     }
