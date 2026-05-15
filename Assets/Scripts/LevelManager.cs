@@ -100,6 +100,7 @@ public class LevelManager : MonoBehaviour
     //public GameObject interactText;
 
     public bool end = false;
+    public GameObject portalText;
 
     void Start()
     {
@@ -668,13 +669,33 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void UnlockPortal()
+    private bool UnlockPortal()
     {
         if (moneyAmount >= 5000)
         {
             portalUnlocked = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void MoneyCheck()
+    {
+        if(UnlockPortal() == true)
+        {
+            end = true;
+        }
+        else
+        {
+            portalText.SetActive(true);
         }
     }
+
+    public void AwardClams(int amount)
+    {
+
+    }
+
 
 
     /*public void CheckForPlayerDeath(bool kill)

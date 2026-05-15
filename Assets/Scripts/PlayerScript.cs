@@ -193,13 +193,14 @@ namespace Player
                 timer.remainingTime = 0f;
                 CheckForDeath();
             }
-            if (other.gameObject.CompareTag("Portal"))
+            /*if (other.gameObject.CompareTag("Portal"))
             {
-                lm.end = true;
+                lm.MoneyCheck();
+                //lm.end = true;
                 //timer.remainingTime = 0f;
                 //CheckForDeath();
                 //
-            }
+            }*/
 
         }
 
@@ -221,6 +222,16 @@ namespace Player
                 anim.Play("mine");
 
             }
+
+            if (other.gameObject.CompareTag("Portal"))
+            {
+                lm.MoneyCheck();
+                //lm.end = true;
+                //timer.remainingTime = 0f;
+                //CheckForDeath();
+                //
+            }
+
 
         }
 
@@ -245,6 +256,10 @@ namespace Player
                 }
                 inWater = false;
                 print("out Water");
+            }
+            if (other.gameObject.CompareTag("Portal"))
+            {
+                lm.portalText.SetActive(false);
             }
         }
 

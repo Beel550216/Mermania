@@ -21,6 +21,8 @@ TagManager:
   - NPC1
   - NPC2
   - Portal
+  - NPC3
+  - NPCnotlost
   layers:
   - Default
   - TransparentFX
