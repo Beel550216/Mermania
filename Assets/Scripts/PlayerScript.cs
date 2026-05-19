@@ -58,6 +58,8 @@ namespace Player
         public bool sprint;
         public bool escapeMenu;
 
+        public Vector3 newPosition = new Vector3(64, 517, -80);
+
         //public bool jumpPressed;
 
         private void Start()
@@ -107,6 +109,8 @@ namespace Player
 
             velocity.y += gravity * Time.deltaTime; //gravity
             controller.Move(velocity * Time.deltaTime);
+
+            OnEnd();
 
 
             /*
@@ -364,6 +368,25 @@ namespace Player
                 escapeMenu = false;
             }*/
         }
+
+        public void OnEnd()
+        {
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                audioManager.StopMaster();
+                lm.end = true;
+                lm.endCam.transform.position = newPosition;
+                lm.endCanvas.SetActive(true);
+                lm.Pause();
+                Destroy(gameObject);
+            }
+            /*else
+            {
+                escapeMenu = false;
+            }*/
+        }
+
 
 
         /* public void OnInteract(InputValue value)

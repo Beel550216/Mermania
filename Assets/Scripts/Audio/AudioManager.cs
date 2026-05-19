@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     
     [SerializeField] public AudioSource sfxSource;
     [SerializeField] public AudioSource bgmSource;
+    [SerializeField] public AudioSource ambienceSource;
     [SerializeField] List<AudioClip> sfxClips = new List<AudioClip>();
     [SerializeField] List<AudioClip> bgmClips = new List<AudioClip>();
 
@@ -75,6 +76,13 @@ public class AudioManager : MonoBehaviour
     public void StopBGM()
     {
         bgmSource.Stop();
+    }
+
+    public void StopMaster()
+    {
+        bgmSource.Stop();
+        sfxSource.Stop();
+        ambienceSource.Stop();
     }
 
 }

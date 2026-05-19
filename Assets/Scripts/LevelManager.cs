@@ -71,6 +71,7 @@ public class LevelManager : MonoBehaviour
     public int stoneCount = 0;
     public int coconutCount = 0;
     public int combCount = 0;
+    public int bottleCount = 0;
 
     public List<TMP_Text> buyItemsList = new List<TMP_Text>();
 
@@ -101,6 +102,10 @@ public class LevelManager : MonoBehaviour
 
     public bool end = false;
     public GameObject portalText;
+
+    public GameObject endCam;
+    public GameObject endCanvas;
+    public GameObject mainCanvas;
 
     void Start()
     {
@@ -316,6 +321,7 @@ public class LevelManager : MonoBehaviour
         stoneCount = 0;
         coconutCount = 0;
         combCount = 0;
+        bottleCount = 0;
 
         for (int i = 0; i < collectibles.Count; i++)
         {
@@ -332,6 +338,10 @@ public class LevelManager : MonoBehaviour
             {
                 combCount++;
             }
+            if (collectibles[i] == "WaterBottle")
+            {
+                bottleCount++;
+            }
         }
 
         stoneText.text = stoneCount.ToString();
@@ -342,8 +352,9 @@ public class LevelManager : MonoBehaviour
         Debug.Log("STONE " + stoneCount);
     }
     
-    public int stoneSellCount = 1;
-    public int coconutSellCount = 1;
+    public int stoneSellCount = 1;  //
+    public int coconutSellCount = 1; //
+    public int bottleSellCount = 1; //
 
     public void AddSellItem(string item)
     {
@@ -370,6 +381,15 @@ public class LevelManager : MonoBehaviour
                 coconutSellCount++;
                 Debug.Log("COCONUT COUNT" + coconutSellCount);
                 Debug.Log("CURRENT COCONUT COUNT" + coconutCount);
+                Succeeded(item);
+
+                //soldAmount = soldAmount + 30;
+            }
+            if (item == "WaterBottle" && bottleSellCount <= bottleCount) //STOPS INFINTELY BUYING
+            {
+                bottleSellCount++;
+                Debug.Log("BOTTLE COUNT" + bottleSellCount);
+                Debug.Log("CURRENT BOTTLE COUNT" + bottleCount);
                 Succeeded(item);
 
                 //soldAmount = soldAmount + 30;
@@ -571,6 +591,7 @@ public class LevelManager : MonoBehaviour
 
         stoneSellCount = 1;
         coconutSellCount = 1;
+        bottleSellCount = 0; //
         Debug.Log("NEW STONE AMOUNT:" + stoneSellCount);
 
         UpdateInventory(); //NEEDS TO UPDATE OTHERWISE IT WILL COUNT THE ITEMS THAT YOU JUST SOLD
@@ -684,6 +705,8 @@ public class LevelManager : MonoBehaviour
         if(UnlockPortal() == true)
         {
             end = true;
+            mainCanvas.SetActive(false);
+            endCanvas.SetActive(true);
         }
         else
         {

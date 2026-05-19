@@ -17,6 +17,7 @@ public class VolumeSettings : MonoBehaviour
     public GameObject audioManagerObject;
 
     public const string Mixer_Music = "MusicVolume";
+    public const string Mixer_Master = "MasterVolume";
     public const string Mixer_SFX = "SFXVolume";
 
    // public const string Mixer_Ambiance = "AmbianceVolume";
