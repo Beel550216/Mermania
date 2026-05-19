@@ -23,6 +23,7 @@ TagManager:
   - Portal
   - NPC3
   - NPCnotlost
+  - WaterBottle
   layers:
   - Default
   - TransparentFX
