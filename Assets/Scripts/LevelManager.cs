@@ -113,6 +113,11 @@ public class LevelManager : MonoBehaviour
     public List<string> IncompleteQuests = new List<string>();
     public List<string> CompleteQuests = new List<string>();
 
+    void Awake()
+    {
+        Play(); //
+    }
+
     void Start()
     {
         GameObject mainCamGO = GameObject.FindGameObjectWithTag("MainCamera");
@@ -176,6 +181,8 @@ public class LevelManager : MonoBehaviour
 
     public void SceneCheck()
     {
+        //Play(); //
+
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             Cursor.lockState = CursorLockMode.Locked;

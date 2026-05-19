@@ -31438,18 +31438,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1348244604}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &234133601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306146,7 +306134,7 @@ PrefabInstance:
     - target: {fileID: 7577752752325389804, guid: 8947fbdc61da87746b25ecbcaf338d07, type: 3}
       propertyPath: 'bgmClips.Array.data[1]'
       value: 
-      objectReference: {fileID: 8300000, guid: 3a6de200ced492946a8fedf2fe253358, type: 3}
+      objectReference: {fileID: 8300000, guid: 1f071a63d8aa64f4aa30b09d615c97ea, type: 3}
     - target: {fileID: 7577752752325389804, guid: 8947fbdc61da87746b25ecbcaf338d07, type: 3}
       propertyPath: 'sfxClips.Array.data[3]'
       value: 

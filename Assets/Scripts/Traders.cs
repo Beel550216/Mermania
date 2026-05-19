@@ -49,6 +49,15 @@ namespace Player
         public List<string> npcDialogues = new List<string>();
         public List<string> npcName = new List<string>();
 
+
+        public enum Quests
+        {
+            Friend,
+            Water,
+            Perfume,
+            comb
+        }
+
         private void Awake()
         {
             npcList.Add("NPC1");
