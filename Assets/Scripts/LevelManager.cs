@@ -51,6 +51,8 @@ public class LevelManager : MonoBehaviour
     public TMP_Text stoneText;
     public TMP_Text coconutText;
     public TMP_Text combText;
+    public TMP_Text bottleText;
+    public TMP_Text perfumeText;
 
     public float bonus = 1;
     public float moneyAmount;
@@ -72,6 +74,7 @@ public class LevelManager : MonoBehaviour
     public int coconutCount = 0;
     public int combCount = 0;
     public int bottleCount = 0;
+    public int perfumeCount = 0;
 
     public List<TMP_Text> buyItemsList = new List<TMP_Text>();
 
@@ -106,6 +109,9 @@ public class LevelManager : MonoBehaviour
     public GameObject endCam;
     public GameObject endCanvas;
     public GameObject mainCanvas;
+
+    public List<string> IncompleteQuests = new List<string>();
+    public List<string> CompleteQuests = new List<string>();
 
     void Start()
     {
@@ -150,7 +156,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Effects " + enabled);
 
         CheckForKeys();
-        CheckPause();
+        //CheckPause();
 
         ButtonCheck();
         InteractOff();
@@ -322,6 +328,7 @@ public class LevelManager : MonoBehaviour
         coconutCount = 0;
         combCount = 0;
         bottleCount = 0;
+        perfumeCount = 0;
 
         for (int i = 0; i < collectibles.Count; i++)
         {
@@ -342,6 +349,10 @@ public class LevelManager : MonoBehaviour
             {
                 bottleCount++;
             }
+            if (collectibles[i] == "Perfume")
+            {
+                perfumeCount++;
+            }
         }
 
         stoneText.text = stoneCount.ToString();
@@ -349,12 +360,16 @@ public class LevelManager : MonoBehaviour
         Debug.Log(stoneCount);
         coconutText.text = coconutCount.ToString();
         combText.text = combCount.ToString();
+        bottleText.text = bottleCount.ToString();
+        perfumeText.text = perfumeCount.ToString();
+
         Debug.Log("STONE " + stoneCount);
     }
     
     public int stoneSellCount = 1;  //
     public int coconutSellCount = 1; //
     public int bottleSellCount = 1; //
+    public int perfumeSellCount = 1; //
 
     public void AddSellItem(string item)
     {
@@ -385,9 +400,18 @@ public class LevelManager : MonoBehaviour
 
                 //soldAmount = soldAmount + 30;
             }
-            if (item == "WaterBottle" && bottleSellCount <= bottleCount) //STOPS INFINTELY BUYING
+            if (item == "WaterBottle" && bottleSellCount <= bottleCount)
             {
                 bottleSellCount++;
+                Debug.Log("BOTTLE COUNT" + bottleSellCount);
+                Debug.Log("CURRENT BOTTLE COUNT" + bottleCount);
+                Succeeded(item);
+
+                //soldAmount = soldAmount + 30;
+            }
+            if (item == "Perfume" && perfumeSellCount <= perfumeCount)
+            {
+                perfumeSellCount++;
                 Debug.Log("BOTTLE COUNT" + bottleSellCount);
                 Debug.Log("CURRENT BOTTLE COUNT" + bottleCount);
                 Succeeded(item);
@@ -438,6 +462,14 @@ public class LevelManager : MonoBehaviour
             if (removeCollectible[i] == "Comb")
             {
                 soldAmount = soldAmount + 150;
+            }
+            if (removeCollectible[i] == "WaterBottle")
+            {
+                soldAmount = soldAmount + 200;
+            }
+            if (removeCollectible[i] == "Perfume")
+            {
+                soldAmount = soldAmount + 400;
             }
 
         }
@@ -571,6 +603,19 @@ public class LevelManager : MonoBehaviour
                 collectibles.Remove(removeCollectible[i]);
                 RemoveCollectible(removeCollectible[i]);
             }
+
+            if (removeCollectible[i] == "WaterBottle" && bottleCount > 0)
+            {
+                bottleCount--;
+                collectibles.Remove(removeCollectible[i]);
+                RemoveCollectible(removeCollectible[i]);
+            }
+            if (removeCollectible[i] == "Perfume" && perfumeCount > 0)
+            {
+                perfumeCount--;
+                collectibles.Remove(removeCollectible[i]);
+                RemoveCollectible(removeCollectible[i]);
+            }
             else
             {
                 //change text to display "ERROR" or like "not enough funds :("
@@ -592,6 +637,7 @@ public class LevelManager : MonoBehaviour
         stoneSellCount = 1;
         coconutSellCount = 1;
         bottleSellCount = 0; //
+        perfumeSellCount = 0; //
         Debug.Log("NEW STONE AMOUNT:" + stoneSellCount);
 
         UpdateInventory(); //NEEDS TO UPDATE OTHERWISE IT WILL COUNT THE ITEMS THAT YOU JUST SOLD

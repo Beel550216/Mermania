@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
@@ -7,6 +8,8 @@ public class Collectible : MonoBehaviour
 
     public AudioManager audioManager;
     public GameObject audioManagerObject;
+    public Animator anim;
+
 
     private void Awake()
     {
@@ -35,7 +38,10 @@ public class Collectible : MonoBehaviour
 
             for(int i = 0; i < lm.collectMultiplier; i++)
             {
-                lm.collectibles.Add(type);
+                if(type != "treasure")
+                {
+                    lm.collectibles.Add(type);
+                }
             }
             //lm.UpdateInventory();
 
@@ -47,10 +53,45 @@ public class Collectible : MonoBehaviour
             {
                 audioManager.PlaySFX(5);
             }
+            if(type == "WaterBottle")
+            {
+                audioManager.PlaySFX(7);
+            }
+            if(type == "Perfume")
+            {
+                audioManager.PlaySFX(8);
+            }
+
+            if (type != "treasure")
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                anim.SetBool("open", true);
+                TreasureItem(gameObject);
+                audioManager.PlaySFX(8);
+            }
 
             //Destroy(gameObject);
-            gameObject.SetActive(false);
 
+        }
+    }
+
+    public void SetInactive()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void TreasureItem(GameObject other)
+    {
+        foreach (Transform child in other.transform)
+        {
+            if (child.gameObject.tag == "Perfume" || child.gameObject.tag == "WaterBottle" || child.gameObject.tag == "Coconut" || child.gameObject.tag == "Stone" || child.gameObject.tag == "Comb")
+            {
+                lm.collectibles.Add(child.gameObject.tag);
+                Debug.Log("TREASURE ITEM ADDED");
+            }
         }
     }
 }

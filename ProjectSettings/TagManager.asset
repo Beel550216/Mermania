@@ -24,6 +24,9 @@ TagManager:
   - NPC3
   - NPCnotlost
   - WaterBottle
+  - Perfume
+  - NPClost
+  - treasure
   layers:
   - Default
   - TransparentFX

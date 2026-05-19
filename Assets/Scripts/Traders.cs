@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Networking;
 
 namespace Player
 {
@@ -21,6 +22,9 @@ namespace Player
         public GameObject npcDialogue;
         public TMP_Text npcDialogueText;
         public TMP_Text npcNameText;
+
+        public GameObject questTextBox;
+        public TMP_Text questText;
 
         public bool inInteractionZone;
         public bool atKiosk;
@@ -50,7 +54,7 @@ namespace Player
             npcList.Add("NPC1");
             npcList.Add("NPC2");
             npcList.Add("NPCnotlost");
-            npcList.Add("NPC3");
+            npcList.Add("NPClost");
 
             npcDialogues.Add("Wow, the heat wave is strong today");
             npcDialogues.Add("If only I had something to drink...");
@@ -177,6 +181,9 @@ namespace Player
                     dialogueNum = 3;
                     npcDialogueText.text = npcDialogues[dialogueNum];
                     npcNameText.text = npcName[1];
+
+                    //StartQuest("Find Friend");
+                    StartQuest("Find the friend who wears yellow");
                 }
                 if (gameObject.tag == npcList[2])
                 {
@@ -184,6 +191,7 @@ namespace Player
                     npcDialogueText.text = npcDialogues[dialogueNum];
                     npcNameText.text = npcName[2];
                 }
+
                 if (gameObject.tag == npcList[3])
                 {
                     Debug.Log("NPC FOUND!");
@@ -191,7 +199,8 @@ namespace Player
                     dialogueNum = 10;
                     npcDialogueText.text = npcDialogues[dialogueNum];
                     npcNameText.text = npcName[3];
-                    lm.AwardClams(1000);
+                    EndQuest("Find the friend who wears yellow");
+                    //lm.AwardClams(1000);
                 }
 
                 //NavJumpTo("Buy");
@@ -208,6 +217,24 @@ namespace Player
                 npcDialogueText.text = npcDialogues[dialogueNum];
                 dialogueNum++;
             }
+        }
+
+        public void StartQuest(string questName)
+        {
+            Debug.Log(questName + " QUEST STARTED");
+            lm.IncompleteQuests.Add(questName);
+
+            questText.text = (questName + " Quest Started!");
+            questTextBox.SetActive(true);
+        }
+
+        public void EndQuest(string questName)
+        {
+            lm.IncompleteQuests.Remove(questName);
+            lm.CompleteQuests.Add(questName);
+
+            questText.text = (questName + " Quest Complete!");
+            questTextBox.SetActive(true);
         }
 
 
@@ -277,6 +304,7 @@ namespace Player
                 npcDialogue.gameObject.SetActive(false);
                 atNPC = false;
                 lm.portalText.SetActive(false);
+                questTextBox.SetActive(false);
 
             }
         }
