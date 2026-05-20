@@ -310,7 +310,7 @@ namespace Player
         }
 
 
-        public void OnJump(InputValue value)
+       /* public void OnJump(InputValue value)
         {
 
             if (value.isPressed)
@@ -318,7 +318,7 @@ namespace Player
                 Debug.Log("PRESSED BUTTON JUMP");
                 velocity.y = Mathf.Sqrt(5 * -2 * gravity);
             }
-        }
+        }*/
 
         public void OnInteract(InputValue value)
         {
@@ -362,6 +362,8 @@ namespace Player
                 {
                     escapeMenu = true;
                 }
+
+                lm.CheckPause();
             }
             /*else
             {
@@ -374,7 +376,7 @@ namespace Player
 
             if (Input.GetKeyDown(KeyCode.M))
             {
-                audioManager.StopMaster();
+                audioManager.StopAll();
                 lm.end = true;
                 lm.endCam.transform.position = newPosition;
                 lm.endCanvas.SetActive(true);

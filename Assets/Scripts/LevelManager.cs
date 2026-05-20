@@ -254,6 +254,7 @@ public class LevelManager : MonoBehaviour
             pause.SetActive(true);
             settingsButton = GameObject.FindGameObjectWithTag("Settings");
             SetButton(settingsButton);
+            //Pause();
 
             //buttonNav.JumpToSpecificElement("Settings");
             //ButtonNav.GetComponent(JumpToElement());
@@ -451,7 +452,15 @@ public class LevelManager : MonoBehaviour
         Debug.Log("SUCCEEDED :)");
     }
 
-     public void TotalSell()
+    public void LeftSell()
+    {
+        for (int i = 0; i < removeCollectible.Count; i++)
+        {
+           removeCollectible.Remove(removeCollectible[i]);
+        }
+    }
+
+    public void TotalSell()
     {
         for (int i = 0; i < removeCollectible.Count; i++) //WAS ONLY DOING LESS THAN
         {
@@ -668,19 +677,31 @@ public class LevelManager : MonoBehaviour
 
     public void ResetCollectibles()
     {
-        if(Input.GetKeyDown(KeyCode.M))  //CHANGE THIS HERE
+        int totalActive = 0;
+        
+        Debug.Log("RESET COLLECTIBLES CALLED");
+        foreach (Transform child in mapCollectible.transform)
         {
-            Debug.Log("RESET COLLECTIBLES CALLED");
-            foreach (Transform child in mapCollectible.transform)
-        {
-            if (child != null && child.gameObject != null)
+            if (child.gameObject.activeSelf == true)
             {
-                child.gameObject.SetActive(true);
+                totalActive++;
             }
         }
+        Debug.Log("Total active= " + totalActive);
+
+        if(totalActive <= 15)
+        {
+            foreach (Transform child in mapCollectible.transform)
+            {
+                if (child != null && child.gameObject != null)
+                {
+                    child.gameObject.SetActive(true);
+                }
+            }
         }
-        //transform.GetChild(0).gameObject.SetActive(false);
     }
+        //transform.GetChild(0).gameObject.SetActive(false);
+    //}
     
 
     /*public bool InteractPressed()

@@ -19,6 +19,8 @@ public class AudioManager : MonoBehaviour
     
     private int currentClip;
 
+    private bool stopped;
+
     void Awake()
     {
         if (instance == null)
@@ -78,11 +80,35 @@ public class AudioManager : MonoBehaviour
         bgmSource.Stop();
     }
 
-    public void StopMaster()
+    public void StopAll()
     {
         bgmSource.Stop();
         sfxSource.Stop();
         ambienceSource.Stop();
+
+        stopped = true;
+    }
+
+    public void PlayAll()
+    {
+        bgmSource.Play();
+        sfxSource.Play();
+        ambienceSource.Play();
+
+        stopped = false;
+    }
+
+
+    public void MuteButton()
+    {
+        if (stopped == true)
+        {
+            PlayAll();
+        }
+        if(stopped == false)
+        {
+            StopAll();
+        }
     }
 
 }

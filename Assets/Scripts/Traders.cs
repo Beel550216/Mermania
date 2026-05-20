@@ -126,7 +126,7 @@ namespace Player
             ActivateFishing();
             Fishing();
             ActivateNPC();
-            DialoguePress();
+            //DialoguePress();
             //LeaveKiosk();
         }
 
@@ -212,7 +212,7 @@ namespace Player
                     //lm.AwardClams(1000);
                 }
 
-                //NavJumpTo("Buy");
+                //NavJumpTo("Next");
 
             }
         }
@@ -221,11 +221,12 @@ namespace Player
 
         public void DialoguePress()
         {
-            if(lm.interaction == true && npcList.Contains(gameObject.tag) && inInteractionZone)
-            {
-                npcDialogueText.text = npcDialogues[dialogueNum];
-                dialogueNum++;
-            }
+            //if(lm.interaction == true && inInteractionZone) //&& npcList.Contains(gameObject.tag)
+            //{
+                Debug.Log("DIALOGUE CALLED");
+            dialogueNum++;
+            npcDialogueText.text = npcDialogues[dialogueNum];
+            //}
         }
 
         public void StartQuest(string questName)

@@ -27,6 +27,8 @@ TagManager:
   - Perfume
   - NPClost
   - treasure
+  - Mute
+  - Next
   layers:
   - Default
   - TransparentFX
