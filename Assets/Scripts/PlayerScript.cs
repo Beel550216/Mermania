@@ -57,6 +57,8 @@ namespace Player
 
         public bool sprint;
         public bool escapeMenu;
+        public bool useMenu;
+        public bool useInventory;
 
         public Vector3 newPosition = new Vector3(64, 517, -80);
 
@@ -371,6 +373,27 @@ namespace Player
             }*/
         }
 
+        public void OnUse(InputValue value)
+        {
+
+            if (value.isPressed)
+            {
+                Debug.Log("PRESSED BUTTON USE");
+                //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
+
+                if(useMenu == true)
+                {
+                    useMenu = false;
+                }
+                else
+                {
+                    useMenu = true;
+                }
+
+                lm.CheckUse();
+            }
+        }
+
         public void OnEnd()
         {
 
@@ -388,6 +411,30 @@ namespace Player
                 escapeMenu = false;
             }*/
         }
+        
+        public void OnInventory(InputValue value)
+        {
+
+            if (value.isPressed)
+            {
+                Debug.Log("PRESSED BUTTON INVENTORY");
+                //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
+
+                if(useInventory == true)
+                {
+                    useInventory = false;
+                    Time.timeScale = 1;
+                }
+                else
+                {
+                    useInventory = true;
+                    Time.timeScale = 0;
+                }
+
+                lm.CheckInventory();
+            }
+        }
+
 
 
 

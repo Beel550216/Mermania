@@ -43,7 +43,6 @@ public class Collectible : MonoBehaviour
                     lm.collectibles.Add(type);
                 }
             }
-            //lm.UpdateInventory();
 
             if(type == "Stone")
             {
@@ -72,6 +71,8 @@ public class Collectible : MonoBehaviour
                 TreasureItem(gameObject);
                 audioManager.PlaySFX(8);
             }
+
+            lm.UpdateInventory();
 
             //Destroy(gameObject);
 

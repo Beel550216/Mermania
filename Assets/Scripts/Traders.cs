@@ -44,6 +44,7 @@ namespace Player
         public bool interaction = false;
 
         public GameObject nextButton;
+        public int endNum;
 
         public List<string> npcList = new List<string>();
         public List<string> npcDialogues = new List<string>();
@@ -182,12 +183,14 @@ namespace Player
                 if (gameObject.tag == npcList[0])
                 {
                     dialogueNum = 0;
+                    endNum = 3; //
                     npcDialogueText.text = npcDialogues[dialogueNum];
                     npcNameText.text = npcName[0];
                 }
                 if (gameObject.tag == npcList[1])
                 {
                     dialogueNum = 3;
+                    endNum = 6; //
                     npcDialogueText.text = npcDialogues[dialogueNum];
                     npcNameText.text = npcName[1];
 
@@ -212,6 +215,8 @@ namespace Player
                     //lm.AwardClams(1000);
                 }
 
+                Debug.Log("Current end NUMBER : " + endNum);
+
                 //NavJumpTo("Next");
 
             }
@@ -223,9 +228,21 @@ namespace Player
         {
             //if(lm.interaction == true && inInteractionZone) //&& npcList.Contains(gameObject.tag)
             //{
-                Debug.Log("DIALOGUE CALLED");
-            dialogueNum++;
-            npcDialogueText.text = npcDialogues[dialogueNum];
+            Debug.Log("DIALOGUE CALLED");
+
+            Debug.Log("DIALOGUE NUMBER : " + dialogueNum);
+            Debug.Log("Current end NUMBER : " + endNum);
+
+            if(dialogueNum <= endNum)
+            {
+                dialogueNum++;
+                npcDialogueText.text = npcDialogues[dialogueNum];
+            }
+            else
+            {
+                //do the start quest here. get enum of same position?
+                //like display the text box with the quest on it :)
+            }
             //}
         }
 

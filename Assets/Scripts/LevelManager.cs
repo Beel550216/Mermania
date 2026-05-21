@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour
     public GameObject kiosk;
     public GameObject map;
     public GameObject deadScreen;
+    public GameObject useItem;
 
     public int stone = 0;
 
@@ -53,6 +54,11 @@ public class LevelManager : MonoBehaviour
     public TMP_Text combText;
     public TMP_Text bottleText;
     public TMP_Text perfumeText;
+
+
+    public TMP_Text combUseText;
+    public TMP_Text bottleUseText;
+    public TMP_Text perfumeUseText;
 
     public float bonus = 1;
     public float moneyAmount;
@@ -261,6 +267,45 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void CheckUse()
+    {
+        if ((player.useMenu == true) && SceneManager.GetActiveScene().name == "Game")
+        {
+            Debug.Log("USE CALLED");
+            useItem.SetActive(true);
+            settingsButton = GameObject.FindGameObjectWithTag("CombButton");
+            SetButton(settingsButton);
+            //Pause();
+
+            //buttonNav.JumpToSpecificElement("Settings");
+            //ButtonNav.GetComponent(JumpToElement());
+        }
+    }
+
+    public void CheckInventory()
+    {
+        if ((player.useInventory == true) && SceneManager.GetActiveScene().name == "Game")
+        {
+            Debug.Log("INVENTORY CALLED");
+            inventory.SetActive(true);
+            settingsButton = GameObject.FindGameObjectWithTag("CombButton");
+            SetButton(settingsButton);
+            UpdateInventory();
+                kiosk.SetActive(false);
+                Pause();
+            //Pause();
+
+            //buttonNav.JumpToSpecificElement("Settings");
+            //ButtonNav.GetComponent(JumpToElement());
+        }
+        else
+        {
+            inventory.SetActive(false);
+        }
+    }
+
+
+
     private void EnableEffects(bool enable)
     {
         if (enable)
@@ -293,7 +338,7 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("KEY RUNNING");
 
-        if(Input.GetKeyDown(KeyCode.E))
+        /*if(player.useInventory = true)
         {
             //inventory = GameObject.FindWithTag("Inventory");
 
@@ -327,7 +372,7 @@ public class LevelManager : MonoBehaviour
                 map.SetActive(false);
                 Play();
             }
-        }
+        }*/
     }
 
     public void UpdateInventory()
@@ -370,6 +415,10 @@ public class LevelManager : MonoBehaviour
         combText.text = combCount.ToString();
         bottleText.text = bottleCount.ToString();
         perfumeText.text = perfumeCount.ToString();
+
+        combUseText.text = combCount.ToString();
+        bottleUseText.text = bottleCount.ToString();
+        perfumeUseText.text = perfumeCount.ToString();
 
         Debug.Log("STONE " + stoneCount);
     }
@@ -661,16 +710,47 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    public void IncreaseWater(float amount, string item)
+    public void IncreaseWater(string item)
     {
-        timer.AddTime(amount);
-        RemoveCollectible(item);
+        UpdateInventory();
+        bool foundItem = false;
+
+        for (int i = 0; i < collectibles.Count; i++)
+        {
+
+            if (collectibles[i] == item)
+            {
+                foundItem = true;
+            }
+        }
+
+        if(timer.remainingTime >= 400)
+        {
+            Debug.Log("OUTATIME :(");
+        }
+        else
+        {
+            if(foundItem == true)
+            {
+                timer.AddTime(60);
+                UpdateInventory();
+                //if()  //if collectibles has the item, or the corresponding count is higher than 0.
+                RemoveCollectible(item);
+
+            }
+            else
+            {
+                Debug.Log("NO ITEM :(");
+            }
+        }
 
     }
 
     public void Dead()
     {
         deadScreen.SetActive(true);
+        settingsButton = GameObject.FindGameObjectWithTag("home");
+        SetButton(settingsButton);
         Time.timeScale = 0;
 
     }
@@ -702,7 +782,6 @@ public class LevelManager : MonoBehaviour
     }
         //transform.GetChild(0).gameObject.SetActive(false);
     //}
-    
 
     /*public bool InteractPressed()
     {

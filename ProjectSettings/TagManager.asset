@@ -29,6 +29,8 @@ TagManager:
   - treasure
   - Mute
   - Next
+  - CombButton
+  - home
   layers:
   - Default
   - TransparentFX
