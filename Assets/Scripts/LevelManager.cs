@@ -423,10 +423,11 @@ public class LevelManager : MonoBehaviour
         Debug.Log("STONE " + stoneCount);
     }
     
-    public int stoneSellCount = 1;  //
-    public int coconutSellCount = 1; //
-    public int bottleSellCount = 1; //
-    public int perfumeSellCount = 1; //
+    public int stoneSellCount = 0;  //
+    public int coconutSellCount = 0; //
+    public int combSellCount = 0; //
+    public int bottleSellCount = 0; //
+    public int perfumeSellCount = 0; //
 
     public void AddSellItem(string item)
     {
@@ -543,6 +544,8 @@ public class LevelManager : MonoBehaviour
         soldAmount = Mathf.Round(soldAmount * 100f)/ 100f;
 
         currentTotalText.text = soldAmount.ToString();
+
+
     }
 
 
@@ -699,8 +702,9 @@ public class LevelManager : MonoBehaviour
         soldAmount = 0;
         currentTotalText.text = soldAmount.ToString();
 
-        stoneSellCount = 1;
-        coconutSellCount = 1;
+        stoneSellCount = 0;
+        coconutSellCount = 0;
+        combSellCount = 0;
         bottleSellCount = 0; //
         perfumeSellCount = 0; //
         Debug.Log("NEW STONE AMOUNT:" + stoneSellCount);
@@ -843,7 +847,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private bool UnlockPortal()
+    public bool UnlockPortal()
     {
         if (moneyAmount >= 5000)
         {
@@ -860,6 +864,8 @@ public class LevelManager : MonoBehaviour
             end = true;
             mainCanvas.SetActive(false);
             endCanvas.SetActive(true);
+            settingsButton = GameObject.FindGameObjectWithTag("Skip");
+            SetButton(settingsButton);
         }
         else
         {

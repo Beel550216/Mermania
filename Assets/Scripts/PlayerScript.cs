@@ -231,6 +231,7 @@ namespace Player
 
             if (other.gameObject.CompareTag("Portal"))
             {
+                lm.UnlockPortal();
                 lm.MoneyCheck();
                 //lm.end = true;
                 //timer.remainingTime = 0f;
