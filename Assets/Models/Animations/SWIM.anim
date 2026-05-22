@@ -1400,7 +1400,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 2100000, guid: 2af8f383752b904428d0608006d8bb4c, type: 2}
+      value: {fileID: 2100000, guid: 9dd34d8fd555fb2428e7f0b2f60f7b94, type: 2}
     - time: 1.7166667
       value: {fileID: 2100000, guid: 2af8f383752b904428d0608006d8bb4c, type: 2}
     attribute: 'm_Materials.Array.data[0]'
@@ -1726,7 +1726,7 @@ AnimationClip:
     - {fileID: 1589487249450911417, guid: 1af67a8573a53ad448c8f361e2a551eb, type: 3}
     - {fileID: 1589487249450911417, guid: cf527ecbed3940742bd83bfd025bab75, type: 3}
     - {fileID: 1589487249450911417, guid: cf527ecbed3940742bd83bfd025bab75, type: 3}
-    - {fileID: 2100000, guid: 2af8f383752b904428d0608006d8bb4c, type: 2}
+    - {fileID: 2100000, guid: 9dd34d8fd555fb2428e7f0b2f60f7b94, type: 2}
     - {fileID: 2100000, guid: 2af8f383752b904428d0608006d8bb4c, type: 2}
   m_AnimationClipSettings:
     serializedVersion: 2

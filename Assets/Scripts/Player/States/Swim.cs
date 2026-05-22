@@ -52,6 +52,12 @@ namespace Player
                 }
             }
 
+            /*if (player.spacePressed == true)
+            {
+                player.velocity.y = Mathf.Sqrt(5 * -2 * player.gravity);
+            }*/
+
+
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;

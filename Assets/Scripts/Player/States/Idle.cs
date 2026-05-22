@@ -34,10 +34,10 @@ namespace Player
                 sm.ChangeState(player.swimState);
             }
 
-            if (player.CheckForJump() == true)
+            /*if (player.CheckForJump() == true)
             {
                 sm.ChangeState(player.jumpState);
-            }
+            }*/
 
             if ( player.CheckForMovement() == true )
             {

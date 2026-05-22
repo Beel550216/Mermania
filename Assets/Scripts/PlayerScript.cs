@@ -60,6 +60,8 @@ namespace Player
         public bool useMenu;
         public bool useInventory;
 
+        public bool spacePressed;
+
         public Vector3 newPosition = new Vector3(64, 517, -80);
 
         //public bool jumpPressed;
@@ -158,15 +160,15 @@ namespace Player
             return false;
         }
 
-        public bool CheckForJump()
+        /*public bool CheckForJump()
         {
-            if (Input.GetKey(KeyCode.Space) == true) //&& isGrounded
+            if (spacePressed == true) //&& isGrounded
             {
                 return true;
 
             }
             return false;
-        }
+        }*/
 
         public bool CheckForDeath()
         {
@@ -395,6 +397,20 @@ namespace Player
             }
         }
 
+        public void OnSpace(InputValue value)
+        {
+
+            if (value.isPressed)
+            {
+                if(inWater == true)
+                {
+                    velocity.y = Mathf.Sqrt(5 * -2 * -10);
+                    Debug.Log("PRESSED BUTTON SPACE");
+                    spacePressed = true;
+                }
+            }
+        }
+
         public void OnEnd()
         {
 
@@ -420,6 +436,7 @@ namespace Player
             {
                 Debug.Log("PRESSED BUTTON INVENTORY");
                 //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
+                lm.kiosk.SetActive(false);
 
                 if(useInventory == true)
                 {

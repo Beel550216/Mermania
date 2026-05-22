@@ -32,6 +32,7 @@ TagManager:
   - CombButton
   - home
   - Skip
+  - back
   layers:
   - Default
   - TransparentFX

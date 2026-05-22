@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using Player;
+﻿using Player;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -24,6 +23,7 @@ public class LevelManager : MonoBehaviour
     public GameObject map;
     public GameObject deadScreen;
     public GameObject useItem;
+    public GameObject descriptions;
 
     public int stone = 0;
 
@@ -548,6 +548,22 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    public void ActivateDescriptions()
+    {
+        if(descriptions.activeSelf == true)
+        {
+            descriptions.SetActive(false);
+            settingsButton = GameObject.FindGameObjectWithTag("FirstBuyButton");
+            SetButton(settingsButton);
+
+        }
+        else
+        {
+            descriptions.SetActive(true);
+            settingsButton = GameObject.FindGameObjectWithTag("back");
+            SetButton(settingsButton);
+        }
+    }
 
 
     public void BuyItem(string item)
@@ -876,6 +892,11 @@ public class LevelManager : MonoBehaviour
     public void AwardClams(int amount)
     {
 
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
 
