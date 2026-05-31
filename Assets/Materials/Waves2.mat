@@ -31,8 +31,8 @@ Material:
     - _DstBlend: 3
     - _SrcBlend: 4
     m_Floats:
-    - _WaveHeight: 2.62
-    - _WaveSpeed: 2.1
+    - _WaveHeight: 0.95
+    - _WaveSpeed: 4.2
     m_Colors:
     - _BaseColor: {r: 0.11449798, g: 0.7273449, b: 0.7830188, a: 1}
   m_BuildTextureStacks: []

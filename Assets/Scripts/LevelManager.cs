@@ -130,6 +130,7 @@ public class LevelManager : MonoBehaviour
         mainCam = mainCamGO.GetComponent<Transform>();
 
         GameObject timerGO = GameObject.FindGameObjectWithTag("Player");
+
         timer = timerGO.GetComponent<Timer>();
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
