@@ -150,10 +150,17 @@ namespace Player
 
                 tradingScreen.gameObject.SetActive(true);
                 atKiosk = true;
+                lm.inKiosk = true;
 
                 NavJumpTo("Buy");
 
             }
+        }
+
+        public void UnActivateKiosk()
+        {
+            atKiosk = true;
+            lm.inKiosk = false;
         }
 
         private void ActivateNPC()

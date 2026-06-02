@@ -19,7 +19,9 @@ public class AudioManager : MonoBehaviour
     
     private int currentClip;
 
-    private bool stopped;
+    public bool stopped;
+
+    public int currentBGM = 0;
 
     void Awake()
     {
@@ -92,6 +94,7 @@ public class AudioManager : MonoBehaviour
     public void PlayAll()
     {
         bgmSource.Play();
+        PlayBGM(currentBGM);
         sfxSource.Play();
         ambienceSource.Play();
 
@@ -103,11 +106,15 @@ public class AudioManager : MonoBehaviour
     {
         if (stopped == true)
         {
+            stopped = false;
             PlayAll();
+            return;
         }
         if(stopped == false)
         {
+            stopped = true;
             StopAll();
+            return;
         }
     }
 

@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
    private float maxTime = 180f;
     public TMP_Text waterMeter;
 
-   void Start()
+    void Start()
    {
         remainingTime = maxTime;
    }
@@ -41,7 +41,9 @@ public class Timer : MonoBehaviour
         int minutes = Mathf.FloorToInt(remainingTime / 60);
         int seconds = Mathf.FloorToInt(remainingTime % 60);
 
-        waterMeter.text = "Water Meter: " + minutes + ":" + seconds;  //h20 (instead of 02)Tik
+        waterMeter.text = "Water Meter: " + minutes + ":" + seconds;
+
+        DisplayWarning();
     }
     public void AddTime(float time)
     {
@@ -64,6 +66,18 @@ public class Timer : MonoBehaviour
         {
             inWater = false;
             print("out Water");
+        }
+    }
+
+    public bool DisplayWarning()
+    {
+        if (remainingTime <= 40)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

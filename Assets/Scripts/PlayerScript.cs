@@ -74,7 +74,9 @@ namespace Player
             audioManager = GetComponent<AudioManager>();
             lm = lmObject.GetComponent<LevelManager>();
             audioManager = audioManagerObject.GetComponent<AudioManager>();
-            
+
+            audioManager.currentBGM = 1;
+
 
             //add variables here to be shared across all states
 
@@ -115,33 +117,6 @@ namespace Player
             controller.Move(velocity * Time.deltaTime);
 
             OnEnd();
-
-
-            /*
-            //jump
-            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-            if (isGrounded && velocity.y < 0)
-            {
-                velocity.y = -2f;
-            }
-
-            if (Input.GetButtonDown("Jump") && isGrounded)
-            {
-                velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-            }
-                /*if (lm.inWater == false)
-                {
-                }
-                if (lm.inWater == true)
-                {
-                    gravity = -12f;
-
-                    //swim stuff
-                }*/
-
-
-
         }
 
         public bool CheckForMovement()
@@ -220,6 +195,7 @@ namespace Player
                 {
                     audioManager.StopBGM();
                     audioManager.PlayBGM(0);
+                    audioManager.currentBGM = 0;
                 }
                 inWater = true;
                 print("in Water");
@@ -238,7 +214,6 @@ namespace Player
                 //lm.end = true;
                 //timer.remainingTime = 0f;
                 //CheckForDeath();
-                //
             }
 
 
@@ -262,6 +237,7 @@ namespace Player
                 {
                     audioManager.StopBGM();
                     audioManager.PlayBGM(1);
+                    audioManager.currentBGM = 1;
                 }
                 inWater = false;
                 print("out Water");
@@ -362,10 +338,12 @@ namespace Player
                 if(escapeMenu == true)
                 {
                     escapeMenu = false;
+                    Time.timeScale = 1;
                 }
                 else
                 {
                     escapeMenu = true;
+                    Time.timeScale = 0;
                 }
 
                 lm.CheckPause();
@@ -381,19 +359,26 @@ namespace Player
 
             if (value.isPressed)
             {
-                Debug.Log("PRESSED BUTTON USE");
-                //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
-
-                if(useMenu == true)
+                if(lm.inKiosk == true)
                 {
-                    useMenu = false;
+                    Debug.Log("AT KIOSK");
                 }
                 else
                 {
-                    useMenu = true;
-                }
+                    Debug.Log("PRESSED BUTTON USE");
+                    //elocity.y = Mathf.Sqrt(5 * -2 * gravity);
 
-                lm.CheckUse();
+                    if (useMenu == true)
+                    {
+                        useMenu = false;
+                    }
+                    else
+                    {
+                        useMenu = true;
+                    }
+
+                    lm.CheckUse();
+                }
             }
         }
 

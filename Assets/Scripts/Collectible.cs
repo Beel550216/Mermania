@@ -38,41 +38,43 @@ public class Collectible : MonoBehaviour
 
             for(int i = 0; i < lm.collectMultiplier; i++)
             {
+                Debug.Log("COLLECTOR MULTIPLIER = " + lm.collectMultiplier);
+
                 if(type != "treasure")
                 {
                     lm.collectibles.Add(type);
                 }
-            }
 
-            if(type == "Stone")
-            {
-                audioManager.PlaySFX(3);
-            }
-            if(type == "Coconut")
-            {
-                audioManager.PlaySFX(5);
-            }
-            if(type == "WaterBottle")
-            {
-                audioManager.PlaySFX(7);
-            }
-            if(type == "Perfume")
-            {
-                audioManager.PlaySFX(8);
-            }
+                if (type == "Stone")
+                {
+                    audioManager.PlaySFX(3);
+                }
+                if (type == "Coconut")
+                {
+                    audioManager.PlaySFX(5);
+                }
+                if (type == "WaterBottle")
+                {
+                    audioManager.PlaySFX(7);
+                }
+                if (type == "Perfume")
+                {
+                    audioManager.PlaySFX(8);
+                }
 
-            if (type != "treasure")
-            {
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                anim.SetBool("open", true);
-                TreasureItem(gameObject);
-                audioManager.PlaySFX(8);
-            }
+                if (type != "treasure")
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    anim.SetBool("open", true);
+                    TreasureItem(gameObject);
+                    audioManager.PlaySFX(8);
+                }
 
-            lm.UpdateInventory();
+                lm.UpdateInventory();
+            }
 
             //Destroy(gameObject);
 

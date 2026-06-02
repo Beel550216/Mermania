@@ -119,6 +119,10 @@ public class LevelManager : MonoBehaviour
     public List<string> IncompleteQuests = new List<string>();
     public List<string> CompleteQuests = new List<string>();
 
+    public GameObject warning;
+
+    public bool inKiosk;
+
     void Awake()
     {
         Play(); //
@@ -135,6 +139,7 @@ public class LevelManager : MonoBehaviour
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         player = playerObject.GetComponent<PlayerScript>();
+
         //mainCamGO = GetComponent(FindGameObjectWithTag("MainCamera"));
         //mainCam = gameObject.FindWithTag("Main Camera").Transform;
         SceneCheck();
@@ -143,6 +148,7 @@ public class LevelManager : MonoBehaviour
         TutorialList();
         Play();
         TutorialText();
+
 
         // /audioManager = audioManagerObject.GetComponent<AudioManager>();
 
@@ -176,6 +182,15 @@ public class LevelManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Game")
         {
             ResetCollectibles();
+
+            if(timer.DisplayWarning() == true)
+            {
+                warning.SetActive(true);
+            }
+            else
+            {
+                warning.SetActive(false);
+            }
         }
 
     }
@@ -198,17 +213,14 @@ public class LevelManager : MonoBehaviour
             //Do stuff here
 
             //counter = 0;
-            //camCount = 4;               // counter for the camera movement
             //CutsceneList(0);
         }
 
         if (SceneManager.GetActiveScene().name == "Game")
         {
-            //audioManager.PlayBGM(1);
             //Do stuff here
 
             //counter = 0;
-            //camCount = 4;               // counter for the camera movement
             //CutsceneList(0);
         }
 
@@ -410,8 +422,6 @@ public class LevelManager : MonoBehaviour
         }
 
         stoneText.text = stoneCount.ToString();
-
-        Debug.Log(stoneCount);
         coconutText.text = coconutCount.ToString();
         combText.text = combCount.ToString();
         bottleText.text = bottleCount.ToString();
@@ -432,25 +442,19 @@ public class LevelManager : MonoBehaviour
 
     public void AddSellItem(string item)
     {
-        //int soldAmount;
 
         //if(collectibles)
         UpdateInventory();
 
-            if (item == "Stone" && stoneSellCount <= stoneCount)
+            if (item == "Stone" && stoneCount >= 1 && stoneSellCount < stoneCount)
             {
                 stoneSellCount++;
-
-                //if(stoneSellCount <= stoneCount)
-               // {
-                    //soldAmount = soldAmount + 20;
-                    Debug.Log("STONE COUNT" + stoneSellCount);
-                    Debug.Log("CURRENT STONE COUNT" + stoneCount);
-                    Succeeded(item);
-               // }
+                Debug.Log("STONE COUNT" + stoneSellCount);
+                Debug.Log("CURRENT STONE COUNT" + stoneCount);
+                Succeeded(item);
 
             }
-            if (item == "Coconut" && coconutSellCount <= coconutCount) //STOPS INFINTELY BUYING
+            if (item == "Coconut" && coconutCount >= 1  && coconutSellCount < coconutCount) //STOPS INFINTELY SELLING OR SELLING ONE MORE THAN THE PLAYER HAS
             {
                 coconutSellCount++;
                 Debug.Log("COCONUT COUNT" + coconutSellCount);
@@ -459,7 +463,7 @@ public class LevelManager : MonoBehaviour
 
                 //soldAmount = soldAmount + 30;
             }
-            if (item == "WaterBottle" && bottleSellCount <= bottleCount)
+            if (item == "WaterBottle" && bottleCount >= 1  && bottleSellCount < bottleCount)
             {
                 bottleSellCount++;
                 Debug.Log("BOTTLE COUNT" + bottleSellCount);
@@ -468,18 +472,21 @@ public class LevelManager : MonoBehaviour
 
                 //soldAmount = soldAmount + 30;
             }
-            if (item == "Perfume" && perfumeSellCount <= perfumeCount)
+            if (item == "Perfume" && bottleCount >= 1 && perfumeSellCount < perfumeCount)
             {
                 perfumeSellCount++;
-                Debug.Log("BOTTLE COUNT" + bottleSellCount);
-                Debug.Log("CURRENT BOTTLE COUNT" + bottleCount);
+                Debug.Log("BOTTLE COUNT" + perfumeSellCount);
+                Debug.Log("CURRENT BOTTLE COUNT" + perfumeCount);
                 Succeeded(item);
 
                 //soldAmount = soldAmount + 30;
             }
-            if (item == "Comb")
+            if (item == "Comb" && combCount >= 1 && combSellCount < combCount)
             {
-                //soldAmount = soldAmount + 150;
+                combSellCount++;
+                Debug.Log("BOTTLE COUNT" + combSellCount);
+                Debug.Log("CURRENT BOTTLE COUNT" + combCount);
+                Succeeded(item);
             }
             else
             {
@@ -538,6 +545,10 @@ public class LevelManager : MonoBehaviour
             {
                 soldAmount = soldAmount + 400;
             }
+            else
+            {
+                Debug.Log("ERROR");
+            }
 
         }
 
@@ -569,7 +580,6 @@ public class LevelManager : MonoBehaviour
 
     public void BuyItem(string item)
     {
-        //int soldAmount;
 
         //removeCollectible.Add(item);
         //TotalSell();
@@ -651,12 +661,11 @@ public class LevelManager : MonoBehaviour
 
     private void RemoveCollectible(string collectible)
     {
+        removeCollectible.Remove(collectible);
+        //processed this collectible (added it to total), so can remove from the main selling list
+
         collectibles.Remove(collectible);
         //selling the collectible removes that collectible from players inventory
-
-
-        removeCollectible.Remove(collectible);
-        //processed this collectiblee (added it to total), so can remove from the main selling list
     }
 
 
@@ -704,6 +713,7 @@ public class LevelManager : MonoBehaviour
             else
             {
                 //change text to display "ERROR" or like "not enough funds :("
+                RemoveCollectible(removeCollectible[i]);
                 Debug.Log("ERROR: PLAYER DOESN'T HAVE THIS ITEM!");
                 //break;
             }
@@ -874,6 +884,10 @@ public class LevelManager : MonoBehaviour
         return false;
     }
 
+    public GameObject endVideoPlayer;
+    public int timeToStop;
+    public bool activeInHierarchy;
+
     public void MoneyCheck()
     {
         if(UnlockPortal() == true)
@@ -883,12 +897,22 @@ public class LevelManager : MonoBehaviour
             endCanvas.SetActive(true);
             settingsButton = GameObject.FindGameObjectWithTag("Skip");
             SetButton(settingsButton);
+
+            //StartCoroutine(WaitUntillEnd());
+            //endVideoPlayer.SetActive(true);
+            //Destroy(endVideoPlayer, timeToStop);
         }
         else
         {
             portalText.SetActive(true);
         }
     }
+
+    /*IEnumerator WaitUntillEnd()
+    {
+        yield return new WaitForSeconds(18);
+        SceneManager.LoadScene("Menu");
+    }*/
 
     public void AwardClams(int amount)
     {
