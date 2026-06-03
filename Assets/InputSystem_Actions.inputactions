@@ -523,6 +523,17 @@
                 },
                 {
                     "name": "",
+                    "id": "8fae7433-ccc0-4761-bf77-7ee7a019cd3b",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9b2bd041-93a3-41e6-9a8b-33234eeadcf4",
                     "path": "<Keyboard>/escape",
                     "interactions": "",

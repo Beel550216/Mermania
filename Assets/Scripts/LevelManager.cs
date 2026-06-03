@@ -593,12 +593,13 @@ public class LevelManager : MonoBehaviour
 
             if(CheckFunds(collecterBuyPrice) == true)
             {
-                collecterBuyPrice = collecterBuyPrice * 1.5f;
                 collectMultiplier++;
+                collecterBuyPrice = collecterBuyPrice * 1.5f;
+                Debug.Log("NEW COLLECTOR MULTIPLIER = " + collectMultiplier);
                 RemoveMoney(buyAmount);
             }
 
-            buyItemsList[0].text = collecterBuyPrice.ToString();
+            buyItemsList[1].text = collecterBuyPrice.ToString();
         }
         if (item == "Water Boost")
         {
@@ -610,7 +611,7 @@ public class LevelManager : MonoBehaviour
                 RemoveMoney(buyAmount);
             }
 
-            buyItemsList[1].text = waterBuyPrice.ToString();
+            buyItemsList[0].text = waterBuyPrice.ToString();
         }
         if (item == "Add Comb")
         {

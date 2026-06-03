@@ -35,15 +35,16 @@ public class Collectible : MonoBehaviour
             //audioManager.GetComponent<AudioManager>().PlaySFX(1);
             string type = gameObject.tag.ToString();
             Debug.Log(type + " Collected");
-
-            for(int i = 0; i < lm.collectMultiplier; i++)
+            
+            if(type != "treasure")
             {
-                Debug.Log("COLLECTOR MULTIPLIER = " + lm.collectMultiplier);
-
-                if(type != "treasure")
+                for(int i = 0; i < lm.collectMultiplier; i++)
                 {
+                    Debug.Log("COLLECTOR MULTIPLIER = " + lm.collectMultiplier);
+
                     lm.collectibles.Add(type);
                 }
+            }
 
                 if (type == "Stone")
                 {
@@ -74,7 +75,6 @@ public class Collectible : MonoBehaviour
                 }
 
                 lm.UpdateInventory();
-            }
 
             //Destroy(gameObject);
 
